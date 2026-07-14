@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>EDUPATH - Platform Pendidikan & Rasionalisasi Jurusan</title>
+    <title>EDUPATH - Pusat Literasi AI & Asisten Pintar Pendidik</title>
 
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -57,12 +57,6 @@
             class="reveal-hero relative z-10 pt-25 md:pt-20 pb-12 md:pb-24 px-4 sm:px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
 
             <div class="flex-1 text-center lg:text-left">
-                <div
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 mb-6 mx-auto lg:mx-0">
-                    <span class="text-[10px] md:text-xs font-bold text-emerald-700 uppercase tracking-widest">Platform
-                        Edukasi AI Terintegrasi</span>
-                </div>
-
                 <h1
                     class="text-[2.5rem] sm:text-5xl md:text-[4.5rem] font-extrabold tracking-tight leading-[1.15] md:leading-[1.1] mb-5 md:mb-8 text-slate-950 drop-shadow-sm">
                     Akselerasi Belajar.<br />
@@ -71,8 +65,7 @@
 
                 <p
                     class="text-sm sm:text-lg md:text-xl text-slate-600 mb-8 md:mb-12 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    Menghubungkan kecerdasan buatan dengan kebutuhan nyata sekolah. Bantu guru merancang materi ajar
-                    otomatis, dan bimbing siswa merasionalisasi jurusan kuliah secara presisi.
+                   Menghubungkan inovasi AI dengan realitas pendidikan. EDUPATH membekali pendidik dengan kompetensi teknologi dan asisten virtual yang mengambil alih kerumitan birokrasi. Efisiensi ini diciptakan agar guru dapat kembali pada esensi utama: mengajar dan menginspirasi.
                 </p>
 
                 <div class="relative inline-block w-full sm:w-auto">
@@ -102,16 +95,8 @@
         <div class="flex flex-col items-center text-center">
             <i class="fas fa-quote-left text-2xl md:text-4xl text-slate-200 mb-4 md:mb-6"></i>
             <h2 class="text-lg md:text-3xl font-medium text-slate-800 leading-relaxed max-w-4xl mx-auto">
-                "Kisah ini berawal dari realita di kampung halaman, <span class="font-bold text-emerald-600">Desa
-                    Sinanggul, Mlonggo, Jepara.</span> Kami melihat sebuah ironi: di saat dunia melesat dengan
-                kecerdasan buatan, banyak guru yang energi dan waktunya justru habis tersita untuk tumpukan administrasi
-                rumit. Dampaknya? Mereka kehilangan ruang untuk berinovasi, dan siswa-siswa potensial pun kehilangan
-                arah karena minimnya pendampingan di era digital.
-                <span class="font-bold text-slate-950">EDUPATH hadir untuk mendisrupsi batasan tersebut.</span> Kami
-                membangun pusat literasi terpadu tempat Bapak/Ibu guru bisa belajar menguasai teknologi, dipadukan
-                dengan asisten AI cerdas (Sistan) untuk mengeksekusi tugas repetitif. Kami mengambil alih kerumitan
-                administrasi, agar pendidik bisa kembali pada esensi sejatinya: menginspirasi masa depan."
-            </h2>
+    "Berangkat dari realitas di <span class="font-bold text-emerald-600">Desa Sinanggul, Mlonggo, Jepara.</span> Kami menemukan bahwa waktu dan energi tenaga pendidik masih tersita oleh beban administratif di tengah pesatnya perkembangan kecerdasan buatan. Hal ini berdampak pada minimnya ruang inovasi dan pendampingan digital bagi siswa. <span class="font-bold text-slate-950">EDUPATH hadir sebagai solusi disruptif.</span> Melalui pusat literasi teknologi dan integrasi asisten AI cerdas (Sistan) untuk mengotomatisasi tugas repetitif, kami mengatasi hambatan administratif tersebut agar pendidik dapat kembali memusatkan fokus pada esensi sejatinya: menginspirasi masa depan."
+</h2>
             <div class="w-10 md:w-12 h-1 bg-gradient-premium mx-auto mt-6 md:mt-10 rounded-full"></div>
             <p class="text-slate-500 font-medium mt-4 md:mt-6 tracking-wide uppercase text-[10px] md:text-sm">Visi
                 Transformasi Akar Rumput</p>
@@ -192,7 +177,6 @@
             <div class="order-1 md:order-2 px-1">
                 <div
                     class="inline-flex items-center gap-1.5 md:gap-2 px-3 py-1 md:py-1.5 rounded-full bg-emerald-50 border border-emerald-100 mb-3 md:mb-6">
-                    <i class="fas fa-sparkles text-emerald-500 text-[9px] md:text-xs"></i>
                     <span class="text-[9px] md:text-xs font-bold text-emerald-700 uppercase tracking-wider">Powered by
                         LLM</span>
                 </div>
@@ -332,7 +316,7 @@
                     Ekspor</span>
             </h2>
             <p class="text-slate-500 font-medium text-sm md:text-xl max-w-2xl mx-auto px-2">
-                Tidak perlu *copy-paste* berantakan. AI menyusun hasilnya dalam format terstruktur yang siap diunduh dan
+                Tidak perlu <span class="font-bold">copy-paste</span> berantakan. AI menyusun hasilnya dalam format terstruktur yang siap diunduh dan
                 dipresentasikan.
             </p>
         </div>
@@ -386,7 +370,7 @@
                 Alur Operasional <span class="text-gradient">Cerdas</span>
             </h2>
             <p class="text-slate-500 font-medium text-sm md:text-lg max-w-2xl mx-auto">
-                Konsep tiga langkah minimalis untuk resolusi maksimal. Sederhana bagi pemula, *powerful* bagi
+                Konsep tiga langkah minimalis untuk resolusi maksimal. Sederhana bagi pemula, <span class="font-bold">powerful</span> bagi
                 profesional.
             </p>
         </div>
@@ -515,11 +499,8 @@
                     </h3>
 
                     {{-- Deskripsi --}}
-                    <p
-                        class="text-slate-600 text-sm md:text-base leading-relaxed font-medium mb-6 md:mb-8 max-w-2xl mx-auto xl:mx-0">
-                        Mahasiswa Universitas Negeri Semarang (UNNES) & kompetitor <span
-                            class="text-slate-800 font-extrabold">Google Developer Competition 2026</span>. Membangun
-                        teknologi dari akar rumput untuk memecahkan problem pendidikan nyata di Indonesia.
+                    <p class="text-slate-600 text-sm md:text-base leading-relaxed font-medium mb-6 md:mb-8 max-w-2xl mx-auto xl:mx-0">
+                        Mahasiswa Universitas Negeri Semarang (UNNES) yang tengah berinovasi dalam <span class="text-slate-800 font-extrabold">#JuaraVibeCodingGoogle2026</span>. Berfokus pada pengembangan arsitektur teknologi tepat guna untuk mengotomatisasi beban birokrasi dan memajukan pendidikan nasional.
                     </p>
 
                     {{-- Tech Stack Pills --}}

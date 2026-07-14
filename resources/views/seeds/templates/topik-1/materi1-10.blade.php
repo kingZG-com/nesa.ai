@@ -6,10 +6,6 @@
         <p>Sekarang, mari saksikan sihir komputasional ini bekerja. Dengan bermodalkan ilmu arsitektur instruksi (yang akan Anda pelajari secara ekstrem di Modul 2 nanti), Anda cukup mengetik sebuah <i>prompt</i> presisi berdurasi 30 detik: "Bertindaklah sebagai Konsultan Kurikulum. Buatkan matriks Rubrik Penilaian Proyek P5 tema Gaya Hidup Berkelanjutan untuk siswa SMP Fase D. Fokuskan indikator penilaian yang kasat mata pada dimensi Kolaborasi dan Kreativitas, bagi dalam 4 kuadran pencapaian, dan sajikan ke dalam format Tabel rapi." Anda menekan tombol <i>Enter</i>, berkedip, dan dalam waktu tepat 5 detik, sebuah struktur tabel yang sangat ilmiah, rapi, dan siap di-<i>print</i> muncul merayap memenuhi layar monitor Anda dengan sempurna.</p>
         <p>Demo ini bukanlah sebuah pembenaran untuk memupuk kemalasan; ini adalah deklarasi kemerdekaan intelektual. Menguasai AI berarti Anda secara radikal sedang "membeli kembali" waktu hidup Anda yang selama ini dirampok oleh beban keadministrasian. Mengakhiri Modul 1 ini, Anda kini telah memiliki landasan filosofis yang kokoh bahwa AI adalah sekutu, bukan musuh. Persiapkan diri, buka pikiran Anda lebar-lebar, dan siapkan jari-jemari Anda, karena di modul-modul selanjutnya, kita akan terjun langsung ke medan tempur teknis untuk meretas batas-batas produktivitas yang belum pernah Anda bayangkan sebelumnya. Selamat datang di era Guru 4.0!</p>
         
-        <div class="mt-10 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-12 py-5 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white text-lg font-black rounded-full transition shadow-xl transform hover:scale-105 border-2 border-emerald-400">
-                <i class="fas fa-flag-checkered mr-2"></i> SELAMAT! LULUS MODUL 1
-            </a>
-        </div>
+
     </div>
 </div>

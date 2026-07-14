@@ -46,10 +46,6 @@
         <p>Mengapa hal ini sangat dilarang? Ingat kembali materi Modul 1 tentang konsep "Context Window" atau jendela memori jangka pendek AI. Jika Anda menjejalkan terlalu banyak contoh panjang ke dalam satu ruang obrolan, sistem AI Anda akan "kebanjiran" data. Akibat fatalnya, instruksi inti atau tugas utama (Pilar ke-3) yang Anda sematkan di baris paling bawah justru akan terbuang dari ingatannya karena terdorong keluar oleh beban data contoh. Selain itu, *prompt* yang berlebihan ukurannya akan mengkonsumsi "Token" secara boros (yang berujung pada tagihan biaya jika Anda menggunakan API berbayar tingkat sekolah).</p>
         <p>Jadikanlah aturan di bawah ini sebagai pedoman emas Anda: Cukup berikan **2 hingga maksimal 3 contoh** yang kualitasnya benar-benar sempurna dan paling merepresentasikan variasi tugas yang Anda harapkan. Tiga contoh kuat sudah lebih dari cukup bagi sirkuit jaringan saraf tiruan (Neural Network) AI yang brilian untuk merangkum dan mengekstrak "DNA" pola kerja Anda dengan sangat mendetail. <i>Less is more</i>, selama kualitas sampel Anda tidak tertandingi.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Membangun Persona
-            </a>
-        </div>
+
     </div>
 </div>

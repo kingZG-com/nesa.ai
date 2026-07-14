@@ -46,10 +46,6 @@
         <p>Jika sekolah Anda telah mengadopsi platform *Edu-Tech* yang aman secara hukum privasi (ingat rambu-rambu Modul 1: dilarang memasukkan identitas murid asli ke AI publik), Anda cukup mengunggah teks esai ketikan murid Anda (anonim tanpa nama, cukup gunakan nomor ID Siswa) ke dalam sistem AI yang telah ditempeli rubrik analitik Anda, lalu beri perintah: "Tolong bedah dan berikan penilaian objektif pada esai bernomor ID 025 ini berdasarkan pakem rubrik tabel di atas. Berikan skor angka di tiap kriteria, hitung total nilainya, dan tuliskan 2 paragraf catatan umpan balik (<i>feedback</i>) konstruktif yang hangat langsung ditujukan kepada siswa penulisnya." Tugas mengoreksi esai satu anak yang biasanya menyiksa durasi selama 15 menit, kini menguap selesai secara profesional hanya dalam tempo 10 detik saja.</p>
         <p>Namun, di balik keajaiban otomatisasi kecepatan cahaya ini, kurikulum kependidikan memberikan sebuah catatan peringatan etis yang teramat tebal dan sakral: <strong>AI diposisikan hanyalah sebagai Asisten Penilai Pertama (First Grader), namun keputusan vonis nilai akhir (Final Grade Approval) dan sentuhan coretan pinggir tinta emas motivasi mutlak harus tetap lahir dari ketukan hati nurani Anda selaku guru manusia asli.</strong> AI sangat andal mendeteksi cacat *grammar* atau menguji kelengkapan bukti data, tetapi ia buta terhadap konteks perjuangan hidup siswa. Gunakan traksi kecepatan AI untuk melakukan penyaringan penilaian draf kasar nilai secara massal, namun luangkan waktu suci Anda untuk membaca ulang lembar tersebut, memberikan paraf hangat, menyuntikkan kata pujian emosional yang tulus, karena ingatan murid tentang catatan pinggir motivasi dari gurunya adalah jimat spiritual yang akan mereka kenang dan bawa seumur hidupnya. AI adalah mesin pengoreksinya, Anda-lah sang Pendidik seutuhnya.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Ke Ilmu Psikometri Soal Ujian
-            </a>
-        </div>
+
     </div>
 </div>

@@ -51,10 +51,6 @@
         <p>Oleh karena celah kultural itu, mem-<i>prompting</i> materi sosiologis yang ditujukan spesifik untuk audiens murid Indonesia mutlak membutuhkan semacam "suntikan injeksi konteks pelokalan budaya". Jangan bertindak naif dengan sekadar melempar perintah mentah seperti: "Tolong buatkan draf skenario teks percakapan (<i>role-play</i>) tentang cara terbaik memotong argumen presentasi pembicaraan kolega yang usianya lebih tua saat rapat RT sedang memanas". AI yang mengadopsi standar budaya Amerika yang pragmatis mungkin akan merender skenario teks *role-play* yang bernada sangat *straight to the point*, asertif, konfrontatif, dan dianggap sangat lugas (yang dalam kacamata birokrasi dan tradisi di Indonesia akan dilabeli sebagai sikap "kurang ajar" atau nihil sopan santun).</p>
         <p>Untuk menyelamatkan materi tersebut dari cacat norma sosial, Anda sebagai guru harus menempatkan diri bertindak selayaknya seorang "Satpam Kurator Budaya" (<i>Cultural Filter</i>) dengan menambahkan batas pakem nilai lokal ke dalam instruksi: "Tolong buatkan draf skenario komunikasi interupsi rapat RT tersebut, NAMUN Anda WAJIB MENGKALIBRASI dan menyelaraskan total keseluruhan pemilihan nada kesopanan, struktur diksi, hingga *body language* karakternya agar sesuai dengan nilai unggah-ungguh (tata krama) kerendahan hati budaya Jawa/Nusantara dan sejalan dengan asas mufakat musyawarah. Hindari sekecil apa pun gaya asertif konfrontasi langsung ala dunia Barat, dan ganti dengan pendekatan negosiasi halus (<i>indirect communication</i>)." Melalui paksaan kalibrasi ini, kita dapat menunggangi kemajuan teknologi global tanpa sedikit pun harus menggadaikan atau mencerabut kearifan akar budaya lokal (*local wisdom*) yang agung di ruang kelas kita.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Kuasai Chain of Thought
-            </a>
-        </div>
+
     </div>
 </div>

@@ -45,11 +45,5 @@
         <p>Di masa depan yang tidak terlalu jauh, papan tulis cerdas interaktif, kacamata <i>Augmented Reality</i>, dan proyeksi guru hologram mungkin akan menjadi pemandangan yang biasa dan standar di sekolah-sekolah penjuru kota. Mesin akan mengambil alih fungsi transfer memori kognitif dasar, dan AI akan menjadi penyusun materi ajar yang jauh lebih pintar, lebih cepat, dan lebih sistematis daripada otak manusia mana pun. Lantas, di mana letak ruang sisa bagi eksistensi seorang guru manusia di era komputasi dewa ini?</p>
         <p>Jawabannya terletak pada satu elemen kosmis yang tidak akan pernah bisa direplikasi secara otentik oleh jutaan baris kode pemrograman Silicon Valley: <strong>Sentuhan Jiwa Manusia</strong>. Desain cetak biru otak mamalia kita sejak zaman purba secara biologis diprogram untuk belajar, bertumbuh, dan meniru melalui hubungan ikatan emosional, getaran empati, dan kehadiran figur panutan (<i>role model</i>) yang memiliki darah dan air mata. Murid mungkin belajar rumus matematika dari AI, tetapi keberanian, integritas, dan semangat pantang menyerah hanya bisa ditularkan oleh pelukan dan tatapan mata bangga dari seorang guru yang tulus.</p>
         <p>Oleh karena itu, masa depan edukasi yang ideal bukanlah tentang robot yang menggantikan manusia, melainkan tentang "Guru-Cyborg" yang mencapai tingkat konvergensi sempurna. Masa depan adalah ruang panggung bagi guru-guru hebat yang menggunakan AI untuk menebas habis 80% beban stres administratif yang mencekik, sehingga mereka bisa mencurahkan 100% energi mental, waktu luang, dan pelukan emosionalnya untuk benar-benar hadir, mendengarkan keluh kesah, memotivasi, dan mendidik anak-anak asuhnya menjadi manusia yang utuh. Gelombang pasang disrupsi telah tiba; jangan takut tenggelam, ambil papan selancar Anda, dan mari kita berselancar!</p>
-        
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Membedah Otak AI
-            </a>
-        </div>
     </div>
 </div>

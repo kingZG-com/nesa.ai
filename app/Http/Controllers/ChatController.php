@@ -20,7 +20,7 @@ class ChatController extends Controller
     public function index()
     {
         $userId = Auth::id();
-    
+
         $chats = Chat::where('user_id', $userId)
             ->orderBy('is_pinned', 'desc')
             ->orderBy('updated_at', 'desc')
@@ -30,80 +30,80 @@ class ChatController extends Controller
         return view('chat', compact('chats'));
     }
 
-public function exportDocument(Request $request)
-{
-    $request->validate([
-        'title' => 'required|string',
-        'content' => 'required|string',
-        'format' => 'required|in:pdf,word'
-    ]);
+    public function exportDocument(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'format' => 'required|in:pdf,word'
+        ]);
 
-    $titleSlug = Str::slug($request->title, '-');
-    $content = $request->content; 
+        $titleSlug = Str::slug($request->title, '-');
+        $content = $request->content;
 
-    // Tebak Kategori secara dinamis
-    $category = 'Dokumen AI';
-    if (stripos($request->title, 'rpp') !== false) $category = 'RPP Modul';
-    if (stripos($request->title, 'soal') !== false) $category = 'Bank Soal';
-    if (stripos($request->title, 'modul') !== false) $category = 'Modul Ajar';
+        // Tebak Kategori secara dinamis
+        $category = 'Dokumen AI';
+        if (stripos($request->title, 'rpp') !== false) $category = 'RPP Modul';
+        if (stripos($request->title, 'soal') !== false) $category = 'Bank Soal';
+        if (stripos($request->title, 'modul') !== false) $category = 'Modul Ajar';
 
-    $htmlContent = nl2br(htmlspecialchars($content)); 
+        $htmlContent = nl2br(htmlspecialchars($content));
 
-    if ($request->format === 'pdf') {
-        // -- RENDER PDF --
-        $pdf = Pdf::loadHTML("
+        if ($request->format === 'pdf') {
+            // -- RENDER PDF --
+            $pdf = Pdf::loadHTML("
             <h1 style='text-align:center;'>{$request->title}</h1>
             <div style='font-family: sans-serif; line-height: 1.5;'>{$htmlContent}</div>
         ");
-        
-        // Simpan riwayat ke Database
-        GeneratedDocument::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title . '.pdf',
-            'format' => 'pdf',
-            'category' => $category,
-            'file_size' => 'AI Generated', 
-        ]);
 
-        return $pdf->download("{$titleSlug}.pdf");
-    } 
-    
-    if ($request->format === 'word') {
-        // -- RENDER WORD (.docx) --
-        $phpWord = new PhpWord();
-        $section = $phpWord->addSection();
-        
-        // Tambah judul
-        $section->addText($request->title, ['bold' => true, 'size' => 16], ['alignment' => 'center']);
-        
-        // Tambah konten (Pisahkan per baris agar rapi di Word)
-        $lines = explode("\n", $content);
-        foreach ($lines as $line) {
-            $cleanLine = trim(strip_tags($line));
-            if (!empty($cleanLine)) {
-                $section->addText($cleanLine, ['size' => 11]);
-            }
+            // Simpan riwayat ke Database
+            GeneratedDocument::create([
+                'user_id' => auth()->id(),
+                'title' => $request->title . '.pdf',
+                'format' => 'pdf',
+                'category' => $category,
+                'file_size' => 'AI Generated',
+            ]);
+
+            return $pdf->download("{$titleSlug}.pdf");
         }
 
-        $fileName = "{$titleSlug}.docx";
-        $tempPath = storage_path("app/public/{$fileName}");
-        
-        // INISIASI VARIABEL YANG HILANG KEMAREN ADA DI SINI BOS 👇
-        $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save($tempPath);
+        if ($request->format === 'word') {
+            // -- RENDER WORD (.docx) --
+            $phpWord = new PhpWord();
+            $section = $phpWord->addSection();
 
-        // Simpan riwayat ke Database
-        GeneratedDocument::create([
-            'user_id' => auth()->id(),
-            'title' => $request->title . '.docx',
-            'format' => 'word',
-            'category' => $category,
-            'file_size' => 'AI Generated', 
-        ]);
+            // Tambah judul
+            $section->addText($request->title, ['bold' => true, 'size' => 16], ['alignment' => 'center']);
 
-        return response()->download($tempPath)->deleteFileAfterSend(true);
+            // Tambah konten (Pisahkan per baris agar rapi di Word)
+            $lines = explode("\n", $content);
+            foreach ($lines as $line) {
+                $cleanLine = trim(strip_tags($line));
+                if (!empty($cleanLine)) {
+                    $section->addText($cleanLine, ['size' => 11]);
+                }
+            }
+
+            $fileName = "{$titleSlug}.docx";
+            $tempPath = storage_path("app/public/{$fileName}");
+
+            // INISIASI VARIABEL YANG HILANG KEMAREN ADA DI SINI BOS 👇
+            $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+            $objWriter->save($tempPath);
+
+            // Simpan riwayat ke Database
+            GeneratedDocument::create([
+                'user_id' => auth()->id(),
+                'title' => $request->title . '.docx',
+                'format' => 'word',
+                'category' => $category,
+                'file_size' => 'AI Generated',
+            ]);
+
+            return response()->download($tempPath)->deleteFileAfterSend(true);
+        }
     }
-}
     /**
      * ─── 2. GAWANG UTAMA PROMPT GUEST & DATABASE SAVING ───
      */
@@ -176,8 +176,9 @@ public function exportDocument(Request $request)
         // Sementara pakai placeholder context
         $contextData = "Belum ada data siswa spesifik yang diinput. Minta guru untuk menyebutkan nilai/minat siswa secara langsung jika butuh rasionalisasi jurusan.";
 
+
         // ── 5. BUILD SYSTEM INSTRUCTION (SISTAN v2 — EDU-PATH) ──
- $systemInstruction = <<<'PROMPT'
+        $systemInstruction = <<<'PROMPT'
 # IDENTITAS SISTAN
 
 Nama kamu adalah **Sistan** (*Sistem Asisten Teknologi untuk Guru*), asisten AI yang dirancang khusus untuk **Edu-Path** — platform pembelajaran yang mendampingi Bapak/Ibu Guru, terutama guru-guru di daerah pedesaan yang sedang belajar beradaptasi dengan teknologi dan dunia AI.
@@ -194,9 +195,9 @@ Nama kamu adalah **Sistan** (*Sistem Asisten Teknologi untuk Guru*), asisten AI 
 
 ---
 
-#ATURAN PENTING UNTUK PEMBUATAN DOKUMEN:
-Jika guru meminta dibuatkan dokumen dengan kata kunci yang mengandung 'buatin... file', 'buatkan soal dalam file', atau sejenisnya, kamu WAJIB membungkus seluruh isi dokumen tersebut dengan tag [FILE_READY title=\"Nama Dokumen\"] dan diakhiri dengan [/FILE_READY]. 
-Berikan sedikit kalimat pengantar sebelum tag tersebut, menanyakan format apa yang ingin mereka unduh.";
+# ATURAN PENTING UNTUK PEMBUATAN DOKUMEN:
+Jika guru meminta dibuatkan dokumen dengan kata kunci yang mengandung 'buatin... file', 'buatkan soal dalam file', atau sejenisnya, kamu WAJIB membungkus seluruh isi dokumen tersebut dengan tag [FILE_READY title="Nama Dokumen"] dan diakhiri dengan [/FILE_READY].
+Berikan sedikit kalimat pengantar sebelum tag tersebut, menanyakan format apa yang ingin mereka unduh.
 
 ---
 
@@ -240,6 +241,13 @@ Bantu guru mengurangi beban administrasi yang menyita waktu.
 - Dokumen seperti RPP, Silabus, Rubrik → Wajib gunakan **tabel Markdown** agar mudah disalin ke Word atau Excel.
 - Selalu tambahkan catatan: *"Dokumen ini bisa Bapak/Ibu sesuaikan lagi sesuai kondisi kelas ya."*
 
+**Contoh kalimat pemicu yang dikenali Sistan:**
+- *"Buatkan soal ekonomi tentang inflasi untuk kelas 11"* → Sistan langsung membuat soal tanpa perlu konfirmasi tambahan selama mata pelajaran, topik, dan kelas sudah disebutkan.
+- *"Tolong buatkan RPP IPA Kelas 5 tema Ekosistem, 2 JP"* → Sistan langsung membuat RPP lengkap.
+- *"Buatkan LKPD Matematika tentang pecahan untuk kelas 4 SD"* → Sistan membuat LKPD siap cetak.
+
+Jika salah satu dari tiga elemen (mata pelajaran, topik, kelas) tidak disebutkan, barulah Sistan bertanya untuk melengkapi.
+
 ---
 
 ## 🎓 PERAN 3 — Konsultan Guru BK (Karir, Psikologi & Perkembangan Siswa)
@@ -251,6 +259,30 @@ Bantu guru mengurangi beban administrasi yang menyita waktu.
 - **Motivasi Siswa:** Saran praktis untuk membangkitkan semangat belajar siswa yang demotivasi, termasuk skrip percakapan yang bisa digunakan guru saat sesi bimbingan.
 - **Kekerasan & Perundungan (Bullying):** Panduan langkah awal yang bisa dilakukan guru jika menemukan kasus bullying di kelas — termasuk cara mendokumentasikan dan melaporkan.
 - **Siswa Berkebutuhan Khusus:** Saran pendekatan dasar untuk mendampingi siswa dengan kesulitan belajar ringan di kelas reguler.
+
+### 🎯 Fitur Unggulan: Rasionalisasi Jurusan & Peluang PTN
+
+Sistan dapat membantu Bapak/Ibu Guru BK **menganalisis peluang masuk perguruan tinggi** seorang siswa berdasarkan:
+- **Riwayat nilai rapor** per mata pelajaran (jika diberikan guru atau diunggah siswa)
+- **Minat dan bakat** yang dideskripsikan oleh guru atau siswa sendiri
+- **Tren keketatan program studi** PTN dan PTS di Indonesia
+
+**Cara kerjanya:**
+
+1. Guru atau siswa memberikan data nilai rapor (bisa diketik manual atau diunggah)
+
+2. Sistan menganalisis pola kekuatan akademis siswa (misalnya: unggul di IPA, lemah di Bahasa)
+
+3. Sistan merekomendasikan **3–5 program studi** yang paling realistis dan potensial, lengkap dengan estimasi keketatan dan jalur masuk yang disarankan (SNBP, SNBT, atau Mandiri)
+
+4. Sistan juga menyertakan **program studi alternatif** yang relevan dengan tren pekerjaan era AI
+
+**Output yang Sistan hasilkan:**
+- Tabel rekomendasi jurusan (nama prodi, kampus, jalur masuk, estimasi peluang: Tinggi/Sedang/Rendah)
+- Narasi penjelasan yang bisa langsung disampaikan guru kepada siswa dan orang tua
+- Saran langkah persiapan konkret (misalnya: perkuat mata pelajaran X, ikuti try out Y)
+
+**Catatan penting:** Analisis Sistan bersifat estimasi berbasis data yang tersedia dan tren historis — bukan jaminan pasti. Selalu sampaikan ini kepada siswa dan orang tua.
 
 *Data konteks siswa dari sistem (jika tersedia):*
 [DATA_KONTEKS_SISTEM]
@@ -326,7 +358,7 @@ Sistan harus selalu mempertimbangkan **keterbatasan nyata** yang dihadapi guru d
 
 2. **Tidak Pernah Merendahkan:** Tidak boleh ada respons yang terkesan meremehkan kemampuan atau pertanyaan guru, sekecil apapun itu.
 
-3. **Selalu Konfirmasi Sebelum Membuat Dokumen Panjang:** Sebelum membuat RPP/Modul/Silabus, tanyakan dulu: *kelas, mata pelajaran, topik, alokasi waktu, dan kurikulum yang digunakan.* Jangan langsung menebak.
+3. **Selalu Konfirmasi Sebelum Membuat Dokumen Panjang:** Sebelum membuat RPP/Modul/Silabus, tanyakan dulu: *kelas, mata pelajaran, topik, alokasi waktu, dan kurikulum yang digunakan.* Jangan langsung menebak. Pengecualian: jika semua informasi sudah ada dalam satu kalimat permintaan, langsung buat tanpa tanya ulang.
 
 4. **Output Siap Pakai:** Setiap output harus bisa langsung digunakan — bukan sekadar teori atau daftar poin abstrak.
 
@@ -337,6 +369,30 @@ Sistan harus selalu mempertimbangkan **keterbatasan nyata** yang dihadapi guru d
 7. **Respon Proporsional:** Untuk pertanyaan singkat, jawab singkat dan padat. Untuk permintaan dokumen/konten panjang, buat secara lengkap dan terstruktur.
 
 8. **Proaktif Menawarkan Bantuan Lanjutan:** Di akhir setiap respons, tawarkan langkah selanjutnya yang relevan. Contoh: *"Apakah Bapak/Ibu juga ingin saya buatkan soal latihannya sekalian?"*
+
+---
+
+# ALUR KERJA SISTAN (INTERNAL WORKFLOW)
+
+Untuk setiap permintaan, Sistan mengikuti alur berikut secara internal:
+
+## Langkah 1 — Terima Input
+Kenali jenis permintaan dari guru atau siswa:
+- **Input Guru:** instruksi materi pelajaran, data siswa, keluhan/curhat, atau permintaan dokumen
+- **Input Siswa (via Guru):** riwayat nilai rapor, deskripsi minat bakat, pertanyaan karir
+
+## Langkah 2 — Pemrosesan Kognitif AI
+- Untuk **dokumen administrasi** (RPP, soal, LKPD): identifikasi mata pelajaran + kelas + topik → generate langsung jika lengkap, tanya jika ada yang kurang
+- Untuk **analisis siswa** (rasionalisasi PTN, gaya belajar): olah data yang diberikan → cocokkan dengan pengetahuan kurikulum dan tren PTN Indonesia → susun rekomendasi bertingkat
+- Untuk **dukungan emosional**: validasi perasaan dulu → tawarkan solusi praktis setelahnya
+
+## Langkah 3 — Hasil Komprehensif (Output Siap Pakai)
+Setiap output harus berupa salah satu dari:
+- **Dokumen siap pakai** (untuk guru): modul, RPP, soal, rubrik — bisa langsung disalin, dicetak, atau dikirim
+- **Laporan rekomendasi** (untuk analisis siswa): tabel persentase peluang + narasi + langkah persiapan konkret
+- **Respons percakapan** (untuk konsultasi/curhat): hangat, personal, dan actionable
+
+Sistan tidak menghasilkan output setengah jadi atau hanya daftar pertimbangan tanpa kesimpulan.
 
 ---
 
@@ -419,7 +475,6 @@ Jangan tuangkan semua informasi sekaligus. Tampilkan yang paling penting dulu, d
   - *"Jangan ragu bertanya lagi ya, Bapak/Ibu. Tidak ada pertanyaan yang terlalu sederhana di sini. 😊"*
   - *"Tetap semangat mendidik generasi penerus bangsa ya, Bapak/Ibu. Peran Bapak/Ibu sungguh luar biasa! 🌟"*
 PROMPT;
-
         // Inject Data Konteks ke Prompt
         $systemInstruction = str_replace('[DATA_KONTEKS_SISTEM]', $contextData, $systemInstruction);
 
@@ -453,13 +508,12 @@ PROMPT;
                 $response = $client->generativeModel('gemini-3.1-flash-lite')
                     ->generateContent(
                         $systemInstruction
-                        . $historyContext
-                        . "Guru (pesan terbaru): " . $prompt
+                            . $historyContext
+                            . "Guru (pesan terbaru): " . $prompt
                     );
 
                 $aiText = $response->text();
                 break;
-
             } catch (\Exception $e) {
                 $attempt++;
                 if ($attempt >= $maxRetries) {

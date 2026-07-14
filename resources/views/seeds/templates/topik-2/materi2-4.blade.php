@@ -46,10 +46,6 @@
         <p>Kita tidak boleh melupakan esensi dasar mengapa kita repot-repot mengadopsi teknologi AI Generatif ke dalam kehidupan profesional kita: tujuan tertingginya adalah untuk menghemat dan mengamankan waktu Anda yang sangat berharga. Anda harus memiliki kesadaran kapan saat yang tepat untuk menutup obrolan. Ingatlah hukum ekonomi dasar tentang <i>The Law of Diminishing Returns</i> (hukum hasil yang semakin menurun)—di mana tambahan usaha dan waktu berjam-jam yang Anda habiskan untuk merevisi suatu *prompt*, pada akhirnya hanya akan menghasilkan sedikit sekali peningkatan perbaikan pada kualitas teks akhir dari AI tersebut.</p>
         <p>Peganglah filosofi jalan tengah ini kuat-kuat: <i>Good Enough is Good Enough</i> (Cukup bagus berarti sudah cukup). Jika hasil iterasi kedua atau ketiga Anda sudah menunjukkan bahwa kerangka dasar dokumen telah 90% sesuai dengan apa yang ada di imajinasi kurikulum Anda, maka angkat tangan dari *keyboard* dan berhentilah melakukan *prompting*. Segera lakukan *copy-paste* draf teks AI tersebut ke lembar kerja Microsoft Word, dan kerjakan sisa pemolesan *finishing* 10%-nya secara mandiri menggunakan kreativitas, nurani kemanusiaan, dan insting guru sejati yang Anda miliki. Harmoni kolaborasi masa depan antara manusia dan mesin adalah tentang kebijaksanaan untuk tahu kapan membiarkan mesin bekerja berlari kencang, dan kapan manusia harus menekan rem untuk mengambil alih kemudi pimpinan di detik-detik terakhir.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Mari Coba Reverse Prompting
-            </a>
-        </div>
+
     </div>
 </div>

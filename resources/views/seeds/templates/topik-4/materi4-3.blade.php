@@ -46,10 +46,6 @@
         <p>Dalam dunia penyusunan evaluasi akademis, kecelakaan <i>error</i> desain instrumen ini dikenal luas dengan sebutan insiden "Soal Ambiguitas Ganda" (soal cacat bersayap yang seolah-olah mengesahkan keberadaan dua jawaban yang sama-sama kuat dan valid). Hal ini adalah bibit bencana terbesar dan jaminan pasti pemicu protes demonstrasi panjang, debat kusir tak berujung, dan caci-maki dari para kelompok murid kritis atau orang tua wali murid teliti pada momen hari pembagian kunci jawaban dan sesi pembahasan soal <i>try-out</i> ujian di kelas nantinya.</p>
         <p>Oleh karena bayang-bayang ancaman kekacauan evaluasi tersebut, maka diwajibkan sebuah undang-undang hukum disiplin kerja mutlak (*Golden Rule*) yang tidak bisa diganggu gugat: Anda, sebagai sosok Guru, mutlak harus selalu melakukan uji coba simulasi mengerjakan sendiri terlebih dahulu setiap butir soal buatan AI dari titik awal hingga akhir sebelum membagikan dokumen tersebut ke atas meja siswa. Taktik validasinya: tutuplah lembar kunci jawaban buatan AI itu rapat-rapat dengan telapak tangan Anda, lalu cobalah Anda sendiri membacakan dan menebak nalar dari susunan opsi A hingga E tersebut. Jika di tengah jalan Anda sebagai guru ahli merasa goyah, dihinggapi keraguan insting, dan hati kecil Anda bergumam merasa bahwa ada "dua jawaban yang berpotensi sama-sama benar di sini", maka vonislah seketika bahwa butir soal tersebut cacat produksi (*flawed*). Langkah perbaikannya: bongkar dan perintahkan AI memodifikasi kalimat opsi pengecohnya agar argumennya sedikit digeser menjadi "lebih salah dan tidak masuk akal" (namun usahakan tetap tampil logis di mata awam), sehingga sang opsi kunci utamanya kelak dapat berdiri paling tegak, jelas benderang, absolut, dan lolos dari pusaran perdebatan apa pun di kelas.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Menyusun Skenario Isu Lokal
-            </a>
-        </div>
+
     </div>
 </div>

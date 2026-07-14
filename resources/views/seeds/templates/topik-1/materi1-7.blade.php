@@ -6,10 +6,6 @@
         <p>Dua istilah teknis yang sering membingungkan namun sangat krusial adalah **Token** dan **Parameter**. Bayangkan Token sebagai kepingan Lego; AI tidak membaca kata secara utuh, melainkan memecah teks menjadi potongan-potongan kecil. Secara kasar, 1.000 token setara dengan sekitar 750 kata. Penting bagi guru tahu soal token karena setiap platform memiliki batasan jumlah token dalam sekali jalan. Jika AI tiba-tiba berhenti menjawab di tengah jalan, kemungkinan besar Anda telah menabrak batas limit tokennya. Sementara itu, Parameter adalah "Sel Otak" atau jumlah koneksi saraf di dalam otak AI. Semakin besar jumlah parameternya (misalnya ratusan miliar pada GPT-4), maka semakin halus ia memahami nuansa bahasa, sarkasme, logika rumit, hingga kemampuan berfilsafat yang mendekati nalar manusia asli.</p>
         <p>Terakhir, Anda harus memahami konsep **Context Window** (Jendela Konteks). Bayangkan ini sebagai luasnya "Meja Kerja" memori jangka pendek AI. Context Window menentukan seberapa banyak informasi teks yang bisa "diingat" dan dipertimbangkan oleh AI dalam satu sesi obrolan yang sedang berlangsung. Jika Anda terus-menerus mengobrol dalam satu thread chat yang sangat panjang hingga berminggu-minggu, AI perlahan akan mulai "pikun" dan melupakan instruksi yang Anda berikan di awal percakapan karena jendela memorinya sudah penuh. Tip praktis untuk guru: Selalu bukalah "Chat/Thread Baru" untuk setiap topik mata pelajaran atau kelas yang berbeda. Hal ini memastikan memori AI tetap segar, fokus, dan tidak tercampur aduk antara rencana pelajaran Biologi kelas 7 dengan laporan evaluasi kelas 9.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-graduation-cap mr-2"></i> Selesaikan Topik 1
-            </a>
-        </div>
+  
     </div>
 </div>

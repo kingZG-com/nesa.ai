@@ -46,10 +46,6 @@
         <p>Jadikanlah aktivitas analisis pasca ujian berbasis teknologi ini sebagai sebuah regulasi hukum atau SOP kerja wajib (<i>Golden SOP</i>) di dalam ikatan organisasi majelis guru MGMP sekolah Anda di setiap akhir musim ujian. Di setiap kali selesainya agenda Ujian Tengah Semester (UTS) atau Penilaian Akhir Tahun, kumpulkan semua draf soal kolektif dari seluruh guru, kumpulkan file CSV data mentah hasil *scoring* jawaban anak dari server komputer panitia, suapkan semuanya ke dalam lambung pengolah data AI, jalankan deteksi analitis instan, lalu ambil tindakan tegas: saring dan amankan porsi 20% hingga 30% butir soal yang secara empiris terbukti di layar memiliki nilai Daya Pembeda yang sangat tinggi (sukses memisahkan secara tegas mana kelompok siswa belajar kasta atas dengan kelompok siswa kasta bawah yang asal menebak).</p>
         <p>Masukkan dan kunci barisan butir soal-soal lolos seleksi kualitas psikometri tingkat tinggi tersebut ke dalam sebuah brankas aset digital yang diberi label khusus: <strong>"Validated Item Pool" (Brankas Bank Soal Emas Teruji Sekolah)</strong>. Untuk sisa soal yang divonis cacat atau memiliki daya beda minus, serahkan ke AI untuk dihancurkan atau diperbaiki ulang struktur opsi pengecohnya agar naik kelas di musim berikutnya. Jika tradisi disiplin ilmiah ini konsisten Anda pupuk dan rawat bersama komite guru dalam kurun rentang waktu 3 hingga 4 tahun ajaran saja, maka sekolah Anda secara mandiri akan resmi memiliki sebuah harta karun pangkalan Bank Soal raksasa yang keakuratannya telah terkalibrasi secara empiris berbasis data nyata lapangan, siap dipanggil kapan saja untuk penugasan instan, dan memiliki derajat legitimasi mutu akademis yang setara dengan instrumen seleksi tes nasional berkelas tinggi. Anda baru saja menyelesaikan revolusi tata kelola mutu evaluasi sekolah terbesar abad ini!</p>
         
-        <div class="mt-10 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-12 py-5 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white text-lg font-black rounded-full transition shadow-xl transform hover:scale-105 border-2 border-emerald-400">
-                <i class="fas fa-medal mr-2"></i> SELESAI PARIPURNA TOPIK 4-7! GASS CONTINUED!
-            </a>
-        </div>
+
     </div>
 </div>

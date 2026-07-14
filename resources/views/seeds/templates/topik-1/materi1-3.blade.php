@@ -45,11 +45,6 @@
         <p>Sekarang, setelah membedah anatomi jeroan mesin The Big Three di atas, pertanyaan strategis bagi Anda bukanlah tentang "AI mana yang paling juara dan mana *software* satu-satunya yang harus saya langgani secara premium?", melainkan "Bagaimana orkestrasi taktik kolaborasi saya mengawinkan keistimewaan masing-masing AI tersebut untuk menyelesaikan pekerjaan borongan saya dalam waktu sesingkat mungkin?" Pikiran seorang Guru Penggerak revolusioner tidak memandang berbagai alat *(tools)* teknologi canggih ini sebagai entitas yang saling berkompetisi merebut tahta tunggal, melainkan memperlakukan mereka sebagai staf ahli spesialis yang berada di bawah komando departemennya sendiri.</p>
         <p>Bangunlah rutinitas SOP alur kerja (<i>workflow</i>) pribadi Anda di lingkungan sekolah. Ketika Anda sedang mengalami kebuntuan pikiran, membutuhkan pasokan ide liar rancangan *game* berbasis *Project-Based Learning*, menyusun naskah lawak teater untuk tugas, atau membutuhkan pemancing *Ice Breaking* pagi hari yang tidak garing, bukalah tab <i>browser</i> menuju <strong>ChatGPT</strong>. Ketika jam menunjukkan waktu rapat evaluasi komite tiba dan Anda seketika diperintahkan merangkum ringkasan berita nasional yang sedang hangat bergejolak pagi itu untuk dibahas ke dalam materi PKn atau merapikan draf email formal kolektif secara instan, panggillah <strong>Gemini</strong>. Dan ketika malam menjelang dan Anda harus mengorbankan waktu istirahat untuk memeras otak mengoreksi puluhan halaman tugas esai anak yang panjang, mendesain RPP kalender dari dasar silabus kementerian, dan menata matriks rubrik panjang, serahkan tumpukan berat itu ke pundak <strong>Claude</strong>.</p>
         <p>Dengan *mindset* adaptif untuk memanggil staf ahli robot yang persis *match* (sesuai) dengan karakter akar persoalannya, Anda akan melepaskan diri dari kutukan beban administrasi fana, dan menjelma menjadi sosok "Konduktor Orkestra Pendidikan" sesungguhnya yang elegan, tajam, anti-panik, tangguh bermanuver, dan selalu memiliki sisa stok cadangan energi mental senyum tulus yang siap diberikan untuk anak-anak didik di setiap pagi gerbang sekolah dibuka.</p>
-        
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Bahas Mitos AI vs Guru
-            </a>
-        </div>
+
     </div>
 </div>

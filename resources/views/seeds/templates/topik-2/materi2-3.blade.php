@@ -45,11 +45,6 @@
         <p>Meracik paragraf deskripsi Persona yang memiliki karakter yang sempurna, humor yang tepat sasaran, dan gaya bahasa yang sangat disukai oleh anak-anak didiknya memang membutuhkan uji coba beberapa kali. Namun, ketika Anda akhirnya sudah menemukan deskripsi kalimat Persona yang paling pas, dan *output* materi yang dihasilkan AI dari karakter tersebut membuat murid-murid Anda antusias luar biasa, maka lakukanlah satu hal krusial: SIMPAN TEKS PROMPT TERSEBUT. Jangan membuang energi berharga Anda untuk mengetik ulang paragraf identitas yang sama setiap kali Anda membuka *browser* di esok hari.</p>
         <p>Jadilah pendidik yang terorganisir. Buatlah satu dokumen khusus di aplikasi Notes HP, Evernote, atau Google Keep Anda yang difungsikan murni sebagai perpustakaan "Template Prompt Persona". Jika Anda adalah guru IPS Sejarah, Anda memiliki folder teks untuk "Persona Guru Sejarah Asik". Jika Anda butuh menyelesaikan laporan sekolah, Anda punya "Persona Sekretaris Sekolah Super Teliti". Sistem *copy-paste* ini adalah rahasia dapur dari efisiensi tingkat tinggi para ahli *Prompt Engineer* profesional di luar sana.</p>
         <p>Bahkan lebih jauh lagi, jika Anda menggunakan platform AI versi berlangganan (seperti fitur *Custom Instructions* atau pembuatan GPTs khusus di ekosistem ChatGPT Plus), Anda bisa menanamkan teks Persona emas ini secara permanen ke dalam otak sistem akun Anda. Keuntungannya? Setiap kali Anda membuka jendela obrolan baru di pagi hari, si AI sudah berdiri siap sedia mengenakan kostum identitas karakter tersebut secara otomatis tanpa perlu disuruh, diulang, atau dipancing dari awal. Itulah definisi sesungguhnya dari efisiensi waktu level maksimal di era edukasi 4.0!</p>
-        
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Kuasai Strategi Iterasi
-            </a>
-        </div>
+      
     </div>
 </div>

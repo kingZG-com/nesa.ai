@@ -46,10 +46,6 @@
         <p>Namun, berurusan dengan karakter non-latin menyimpan kendala teknis tersendiri bagi guru lokal saat proses pembacaan atau pengoreksian di kelas jika mata kita belum terbiasa menatap jalinan hurufnya. Di sinilah kita menyuntikkan trik *Pro-Tip* tambahan pada prompt Anda. Saat Anda meminta AI menerjemahkan sebuah soal esai ke dalam bahasa Mandarin atau Arab, pasang instruksi ganda untuk memunculkan teks bantuan fonetik pembimbing pembacaan visual bagi Anda sendiri selaku penilai.</p>
         <p>Modifikasi prompt Anda dengan perintah penambahan baris transkripsi: "Tolong terjemahkan soal kompetensi perhotelan ini ke dalam bahasa Mandarin murni menggunakan karakter Hanzi. Namun, untuk konsumsi panduan membaca saya selaku guru, WAJIB sertakan baris transkripsi fonetik resmi sistem pinyin tepat di bawah setiap baris kalimat karakternya. (Atau untuk Bahasa Arab: Wajib cetak teks Arab tersebut lengkap dengan harakat dan tanda baris bacaan yang kaku)." Hanya melalui satu sentuhan tombol sakti ini, ruang kelas Anda seketika telah sukses dielevasi bertransformasi menjadi laboratorium bahasa multinasional berkelas tinggi tanpa Anda harus membuang anggaran jutaan rupiah menyewa jasa biro penerjemah tersumpah dari luar sekolah. Efisiensi tingkat tinggi di era borderless education!</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Ke Jurus Rahasia Kisi-Kisi Ujian
-            </a>
-        </div>
+     
     </div>
 </div>

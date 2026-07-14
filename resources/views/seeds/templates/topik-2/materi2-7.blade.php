@@ -51,10 +51,6 @@
         <p>Basa-basi sopan santun ini, dalam skenario obrolan biasa memang terasa menghangatkan. Namun, jika *goal* Anda adalah untuk langsung mengotomatisasi seleksi teks (*copy-paste*) data mentah menuju ke sistem aplikasi lain, kehadiran teks pengantar tambahan ini sangatlah "menjengkelkan" dan merusak tatanan kode sistem (<i>syntax error</i>). Anda harus memasang mode "Diktator" atau otoriter yang tak kenal ampun pada *prompt* spesifikasi format Anda demi menegakkan kepatuhan.</p>
         <p>Gunakanlah gaya komando <i>Strict Formatting</i> (Pemformatan Kaku): "Ekstrak dan keluarkan *database* tersebut di atas mutlak dalam format struktur tabel. PENGINGAT KRUSIAL: Output layar Anda HANYA BOLEH berisi kotak tabel. Anda DILARANG KERAS DAN DIHARAMKAN untuk mengetikkan kata pembuka, memberikan sapaan persetujuan, menyisipkan penjelasan tambahan, atau memberikan kesimpulan penutup apa pun di luar garis tabel utama tersebut." Melalui ketegasan instruksi negatif (batasan apa yang tidak boleh disentuh) ini, jiwa robot AI akan langsung mengambil alih, menyingkirkan empati artifisialnya, dan menyajikan data tabel dingin nan bersih tanpa banyak omong.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Kuasai Cara Menghindari Bias AI
-            </a>
-        </div>
+        
     </div>
 </div>

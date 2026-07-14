@@ -46,10 +46,6 @@
         <p>Rancanglah SOP alur kerja modern ini di laptop Anda: H-1 malam hari sebelum Anda membagikan hasil kertas ulangan harian di kelas, bukalah *chat* AI lo. Masukkan topik ulangan yang baru saja berlangsung, lalu perintahkan AI untuk memproduksi secara serentak "Paket Diferensiasi 3 Level Ujian" ke dalam bentuk tabel. Teks tersebut memuat: 1 set lembar kerja remedial dengan bantuan *hint* tangga kognitif di sebelah kiri, dan 1 lembar instruksi tugas proyek mandiri kreatif pengayaan di kolom sebelah kanan.</p>
         <p>Cetak kedua dokumen tersebut dalam porsi secukupnya. Esok paginya, saat Anda melangkah menembus pintu kelas, Anda tidak lagi datang sekadar membawa tumpukan kertas nilai mati yang berisi coretan angka merah atau biru yang menghakimi mental anak. Anda melangkah masuk layaknya konduktor orkestra pendidikan yang membawa solusi masa depan. Anda berdiri tegak dan berkata dengan senyum hangat: "Anak-anak yang nilainya belum mencapai ketuntasan, silakan berkumpul melingkar di meja sebelah kiri, ini ada lembar jembatan kognitif khusus untuk kita pelajari ulang bersama Bapak/Ibu guru. Dan bagi kalian yang meraih nilai 100, silakan berkumpul di meja kanan, ada misi proyek rahasia tingkat dokter menanti kreativitas kalian." Ruang kelas Anda seketika berubah menjadi ekosistem pembelajaran yang sangat manusiawi, adil, bergerak dinamis, dan hidup!</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Ke Translasi Bilingual Soal
-            </a>
-        </div>
+ 
     </div>
 </div>

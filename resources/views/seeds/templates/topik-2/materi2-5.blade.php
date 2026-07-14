@@ -46,10 +46,6 @@
         <p>Namun, di era kesunyian modern ini, kemampuan arsitektur *Reverse Prompting* perlahan bergeser dari alat produktivitas administrasi semata, bermetamorfosis menjadi semacam bilik rekan refleksi mingguan atau jurnal spiritual interaktif bagi pemulihan jiwa Anda sendiri. Cobalah membuka ruang hening, siapkan secangkir minuman hangat, buka ruang *chat* pribadi Anda, dan ketiklah keluh kesah Anda secara jujur: "Halo asistenku, untuk sesi malam ini, bertindaklah sebagai seorang Psikolog Pendidikan Senior dan Coach Pengembangan Karier yang sangat berempati. Terus terang, saya saat ini sedang merasa *burnout* (kelelahan emosi parah) minggu ini karena dinamika murid-murid di kelasku terasa sangat liar, *disrespectful*, dan sulit sekali diatur."</p>
         <p>Berikan kontrol penyembuhan pada mesin Anda: "Tolong, ajukanlah kepada saya serangkaian pertanyaan observasi reflektif secara pelan-pelan (satu per satu) yang ditujukan untuk membantu saya mengurai tumpukan benang kusut emosi negatif di dada ini. Arahkan saya lewat diskusi ini agar saya mampu menemukan sendiri apa sebenarnya titik buta (*blind spot*) dan akar permasalahan dari rasa marah saya ini, serta pandu saya menyusun langkah teknis kecil yang logis agar api semangat dan mental mengajar saya bisa pulih menyala kembali untuk esok hari." Ketika model bahasa mampu memandu Anda melewati titik balik penyembuhan batin, ia membuktikan bahwa AI—jika dikendalikan secara brilian dengan pilar *prompt* yang benar—telah jauh berevolusi melampaui stigma negatif sebagai "alat pencetak tugas sontekan instan bagi anak sekolah", melainkan menjelma menjadi *support system* (sistem pendukung) senyap yang tulus peduli dan senantiasa hadir merawat denyut nadi kesejahteraan sang pengabdi ilmu itu sendiri.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lulus Separuh Modul 2!
-            </a>
-        </div>
+        
     </div>
 </div>

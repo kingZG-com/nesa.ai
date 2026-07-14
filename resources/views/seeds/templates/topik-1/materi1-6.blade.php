@@ -6,10 +6,6 @@
         <p>Anda wajib memahami perbedaan antara **Jalur Personal (Gratis)** dan **Jalur Enterprise/Edu (Berbayar)**. Pada akun gratis, privasi Anda sangatlah tipis; perusahaan memiliki hak untuk meninjau input Anda guna meningkatkan performa mesin. Namun, pada jalur resmi institusi atau langganan berbayar khusus organisasi, biasanya terdapat jaminan bahwa data Anda "dikunci" dan tidak akan pernah digunakan untuk melatih AI mereka. Sebagai guru, Anda harus menjadi garda terdepan dalam menjaga **Personally Identifiable Information (PII)**. Dilarang keras memasukkan nama lengkap murid, NIK, alamat rumah, nomor telepon orang tua, hingga rekam medis atau catatan psikologis kasus BK (Bimbingan Konseling) murid ke dalam platform AI publik mana pun. Ini adalah pelanggaran privasi fatal yang bisa berujung pada konsekuensi hukum serius.</p>
         <p>Lalu, apa yang "Aman" untuk diinput? Selama data tersebut bersifat konseptual, umum, dan anonim, Anda bebas mengeksplorasinya. Anda boleh meminta AI membuat draf silabus mata pelajaran, merancang soal matematika tingkat menengah, atau menyusun template email sapaan wali murid selama nama spesifik anak disamarkan (misalnya menggunakan sebutan "Siswa A"). Praktik terbaiknya adalah selalu melakukan **Data Masking**; hapus semua identitas asli sebelum Anda melakukan copy-paste ke AI. Ingatlah, kita tetap bisa ngebut menggunakan mobil sport (AI) untuk mempercepat administrasi, tetapi sabuk pengaman privasi harus terpasang rapat agar integritas sekolah dan keselamatan data anak didik tetap terjaga abadi.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Buka Glosarium AI
-            </a>
-        </div>
+        
     </div>
 </div>

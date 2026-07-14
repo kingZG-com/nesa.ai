@@ -45,11 +45,6 @@
         <p>Pilar keempat sekaligus pilar terakhir yang paling sering dilupakan oleh pengguna AI adalah Format. Secara *default*, jika Anda tidak memberikan batasan bentuk, AI akan merespons instruksi Anda dengan memuntahkan jawaban dalam bentuk paragraf-paragraf deskriptif yang sangat panjang. Kumpulan paragraf (yang sering disebut tembok teks atau <i>wall of text</i>) ini sangat menyakitkan mata, sulit dipindai dengan cepat, dan pada akhirnya memaksa Anda untuk membuang waktu memformat ulang (merapikan spasi dan poin) saat menyalinnya ke Microsoft Word.</p>
         <p>Sebagai sang pemegang kendali, Anda berhak sepenuhnya mendikte bagaimana wujud fisik atau tampilan visual akhir dari jawaban tersebut. Anda bisa dengan santai memerintahkan AI untuk menyajikan jawaban dalam bentuk tabel matriks, daftar *bullet points*, skrip percakapan bernomor, bahasa pemformatan *Markdown*, atau bahkan membatasinya secara ketat dengan jumlah kata tertentu. Format yang jelas akan membuat pekerjaan administratif Anda menjadi plug-and-play (bisa langsung digunakan tanpa revisi berarti).</p>
         <p>Sempurnakan *prompt* Anda dengan kalimat penutup yang arogan namun efektif: "Sajikan rencana pembelajaran tersebut secara ketat ke dalam bentuk TABEL matriks dengan kolom Header: Durasi (Menit), Nama Aktivitas, Deskripsi Langkah Guru, dan Alat/Bahan yang Diperlukan. Batasi penjelasan di setiap sel tabel maksimal hanya 50 kata, dan gunakan <i>bullet points</i> khusus untuk daftar soal evaluasi." Jika Anda merangkai Rumus Pamungkas ini: <strong>[Persona] + [Konteks] + [Tugas] + [Format]</strong>, Anda akan menyaksikan keajaiban di mana AI mampu memangkas beban kerja administratif 3 jam menjadi tak lebih dari 3 menit.</p>
-        
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Pelajari Zero-Shot
-            </a>
-        </div>
+
     </div>
 </div>

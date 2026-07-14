@@ -46,10 +46,6 @@
         <p>Jalan keluar ninja untuk meretas keterbatasan ini adalah mengawinkan dua kekuatan teknologi lewat alur kerja (<i>workflow</i>) cerdik: Gunakan AI murni sebagai pabrik penghasil data kuantitatifnya, lalu gunakan Canva atau Excel sebagai desainer visualnya. Kirimkan perintah pengumpulan data ke AI: "Saya butuh stimulus data AKM. Tolong buatkan DATA ANGKA FIKTIF namun memiliki sebaran rasio statistika yang sangat realistis mengenai perbandingan jumlah penduduk pengguna internet aktif di 5 pulau besar Indonesia dari tahun 2020 versus tahun 2023. Sajikan data angka tersebut murni dalam bentuk tabel sederhana."</p>
         <p>Langkah finalnya sangat mudah: Anda tinggal menyalin (*copy*) tabel angka buatan AI tersebut, membuka perangkat Microsoft Excel atau Canva, mem-<i>paste</i> data tersebut, lalu klik opsi 'Ubah Menjadi Grafik Batang / Bar Chart' yang estetik hanya dalam tempo satu menit. Gabungkan gambar grafik yang sudah cantik dari Canva tersebut dengan butir-butir pertanyaan kritis tingkat tinggi yang tadi sudah diproduksi oleh AI ke dalam satu halaman dokumen lembar soal ujian Anda. *Boom!* Anda baru saja menciptakan instrumen ujian AKM berstandar nasional yang sangat profesional, akurat, dan memanjakan mata siswa.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Ke Panduan Soal Esai & Rubrik
-            </a>
-        </div>
+       
     </div>
 </div>

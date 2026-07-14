@@ -65,7 +65,7 @@ body {
 
 /* WRAPPER */
 .content-wrapper {
-    width: 75%;
+    width: 70%;
     font-family: 'Outfit', sans-serif;
     color: #1e293b;
     margin:auto;

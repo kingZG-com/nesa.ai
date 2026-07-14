@@ -45,11 +45,6 @@
         <p>Peralihan ekstrem dari instrumen ujian LOTS menuju HOTS dengan dukungan injeksi AI ini sejatinya menuntut sebuah pengorbanan besar: perubahan <i>mindset</i> (pola pikir) yang sangat fundamental dari dalam diri kita para pendidik. Ketika Anda berani menyodorkan soal setaraf analisis (C4), evaluasi (C5), hingga penciptaan (C6) kepada murid, Anda harus menelan ego keilmuan Anda dan siap menerima kenyataan yang tidak nyaman bahwa: di level ini, mungkin sama sekali tidak ada satu pun kunci jawaban benar yang bersifat absolut dan hitam-putih.</p>
         <p>Soal evaluatif tingkat tinggi pada kodratnya menuntut pemaparan argumen, bukan sekadar pelafalan dogma. Jika di lembar jawaban ujian seorang murid ternyata ia menuliskan konklusi akhir yang berbeda jauh 180 derajat dari panduan kunci jawaban yang telah Anda (atau AI) siapkan sebelumnya, namun murid tersebut nyatanya mampu memaparkan alur logika deduksi yang sangat kokoh, tidak terbantahkan, serta melampirkannya dengan bukti pendukung teoretis yang sangat valid, maka secara etika akademik, murid tersebut sangat berhak mendapatkan nilai seratus persen sempurna.</p>
         <p>Evaluasi pendidikan di era kebangkitan AI bukan lagi ditujukan untuk melombakan siapa yang paling hafal isi buku paket. Evaluasi hari ini adalah tentang menghargai kelenturan saraf berargumen, keberanian mengambil risiko dalam berpikir asimetris, dan kegigihan memecahkan masalah kompleks dari berbagai sudut pandang (<i>problem solving</i>). Kecerdasan buatan hanyalah staf panggung yang bertugas membukakan tirai dan membangun skenario ujiannya, namun pada akhirnya, tetaplah Anda—sang guru—yang duduk di kursi juri untuk menilai dan merayakan kedewasaan berpikir anak bangsa.</p>
-        
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Ke Teknik Prompting HOTS
-            </a>
-        </div>
+
     </div>
 </div>

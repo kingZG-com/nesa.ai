@@ -61,12 +61,7 @@
             </div>
             
             <p class="mt-8">Silakan genggam pedang tempaan *Template* mahakarya ini. Gunakan rahasia dapur komando peretas batas ini dengan kedisiplinan dan keberanian militer yang gigih membelah rutinitas harian, dan bersiaplah secara sukacita menyambut panggung pertunjukan di mana Anda duduk manis bersantai menikmati kekuatan daya *superpower* (*cheat-mode* dunia nyata) terbaru di genggaman punggung telapak tangan kebanggaan Anda, yakni berevolusi terlahir kembali mengklaim gelar sejati sang <strong><i>Prompt Engineer Arsitek Transformasi Pendidikan Tingkat Eksekutif Papan Atas 4.0!</i></strong></p>
-            
-            <div class="mt-10 text-center">
-                <a href="{{ $selesaiUrl }}" class="inline-block px-12 py-5 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white text-lg font-black rounded-full transition shadow-xl transform hover:scale-105 border-2 border-emerald-400">
-                    <i class="fas fa-graduation-cap mr-2"></i> LULUS TOTAL MODUL 2! GASS MODUL BERIKUTNYA!
-                </a>
-            </div>
+
         </div>
     </div>
 </div>

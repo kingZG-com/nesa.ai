@@ -46,10 +46,6 @@
         <p>Cobalah melempar prompt taktis pemanfaatan tren kultur pop ini: "Anak-anak kelas 8 SMP saya saat ini sedang sangat ramai meributkan tren konser musik K-Pop yang penjualan tiketnya ludes dalam waktu 1 menit akibat perang sistem <i>War Ticket</i> digital. Tolong buatkan 2 soal cerita Matematika bab Teori Peluang (Probabilitas) dengan menggunakan fenomena War Ticket Konser ini sebagai bahan studinya. Buat visualisasi data angka pendaftar versus kuota kursi stadion secara realistis."</p>
         <p>Ketika lembar kertas ulangan tersebut dibagikan dan murid membaca kasus yang sangat dekat dengan hobi harian mereka, atmosfer ketegangan ujian seketika akan mencair. Siswa akan terkejut, bersemangat, dan membatin bahwa gurunya adalah sosok yang gaul dan mengerti dunia mereka. Melalui strategi ini, evaluasi pembelajaran berhasil bertransformasi dari rutinitas kurikulum yang kaku menjadi sebuah instrumen pendidikan yang hidup, bernapas, dan relevan dengan zaman.</p>
         
-        <div class="mt-8 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-10 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-lg transform hover:-translate-y-1">
-                <i class="fas fa-check-circle mr-2"></i> Lanjut Ke Generator Soal AKM
-            </a>
-        </div>
+
     </div>
 </div>

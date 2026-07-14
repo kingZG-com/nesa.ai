@@ -46,10 +46,6 @@
         <p>Oleh sebab itu, luangkan sisa energi Anda selama 10 hingga 15 menit ke depan untuk melakukan proses krusial <i>Quality Control & Proofreading</i> (Koreksi Mutu Akhir) pada file spreadsheet Excel yang baru saja Anda buka tersebut. Bacalah secara teliti kolom demi kolom indikatornya; lakukan sedikit penyesuaian kosmetik pada pemilihan kata kerja operasional (KKO) agar kalimatnya benar-benar kawin dan sinkron (<i>matching</i>) dengan dokumen Capaian Pembelajaran (CP) resmi terupdate yang diterbitkan oleh Kemendikbudristek untuk jenjang sekolah Anda.</p>
         <p>Begitu proses penelaahan akhir dari sentuhan insting kemanusiaan Anda menyatakan dokumen ini telah lolos sensor kualitas, berikan sentuhan efek cetak tebal (*bold*) pada baris *header* atas tabel, rapikan garis pembatas margin cetaknya, tekan tombol *Print*, tanda tangani lembar kertas fisiknya dengan goresan tinta pena kebanggaan Anda, lalu berjalanlah dengan langkah tegap, santai, dan penuh percaya diri menuju ruangan Wakasek Kurikulum untuk menyerahkan dokumen administrasi tersebut. Tatap wajah Wakasek Anda yang sedang kelelahan sambil melempar senyuman kemenangan: pekerjaan raksasa akhir semester yang secara historis biasanya merampas kedamaian akhir pekan Anda selama 4 jam penuh, kini sukses diringkas habis secara elegan, saintifik, dan tanpa cacat dalam waktu kurang dari 20 menit pengerjaan. Selamat, Anda baru saja lulus menamatkan total seluruh materi kurikulum Modul 4 dan sah dinobatkan sebagai sang <strong>Master Evaluasi dan Asesmen Pendidikan Berbasis Otomatisasi AI Abad ke-21!</strong></p>
         
-        <div class="mt-10 text-center">
-            <a href="{{ $selesaiUrl }}" class="inline-block px-12 py-5 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white text-lg font-black rounded-full transition shadow-xl transform hover:scale-105 border-2 border-emerald-400">
-                <i class="fas fa-trophy mr-2"></i> LUAR BIASA! ANDA LULUS TOTAL MODUL 4!
-            </a>
-        </div>
+
     </div>
 </div>
