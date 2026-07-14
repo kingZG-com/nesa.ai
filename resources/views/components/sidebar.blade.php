@@ -235,7 +235,7 @@
                     class="w-10 h-10 shrink-0 -ml-2 rounded-full flex items-center justify-center text-white text-[16px] font-bold shadow-sm uppercase overflow-hidden">
                     @if (!empty($avatarDisplay) || auth()->user()?->avatar)
                         <img src="{{ $avatarDisplay ?? auth()->user()->avatar }}" alt="Avatar"
-                            class="w-full h-full object-cover">
+                            class="w-full h-full object-cover" referrerpolicy="no-referrer">
                     @else
                         <div
                             class="w-full h-full bg-gradient-to-tr from-purple-500 to-cyan-500 flex items-center justify-center">

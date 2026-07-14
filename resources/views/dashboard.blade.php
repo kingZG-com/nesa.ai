@@ -49,7 +49,7 @@
                     @endphp
 
                     {{-- 1. Fotonya dengan efek Masking CSS (Kiri transparan, Kanan solid) --}}
-                    <img class="w-full h-full object-cover object-center" src="{{ $finalAvatar }}" alt="User Profile"
+                    <img class="w-full h-full object-cover object-center" src="{{ $finalAvatar }}" alt="User Profile" referrerpolicy="no-referrer"
                         style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%); mask-image: linear-gradient(to right, transparent 0%, black 40%);">
 
                     {{-- 2. Overlay Gradasi Ijo/Putih biar nge-blend halus sama background kiri --}}

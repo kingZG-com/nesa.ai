@@ -56,7 +56,14 @@
         <section
             class="reveal-hero relative z-10 pt-25 md:pt-20 pb-12 md:pb-24 px-4 sm:px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
 
-            <div class="flex-1 text-center lg:text-left">
+            @if (session('error'))
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <span class="block sm:inline">{{ session('error') }}</span>
+                </div>
+            @endif
+            
+            <div class="flex-1 text-center lg:text-left z-10 max-w-3xl mx-auto lg:mx-0">
                 <h1
                     class="text-[2.5rem] sm:text-5xl md:text-[4.5rem] font-extrabold tracking-tight leading-[1.15] md:leading-[1.1] mb-5 md:mb-8 text-slate-950 drop-shadow-sm">
                     Akselerasi Belajar.<br />
@@ -465,7 +472,7 @@
                         <div
                             class="w-full h-full bg-white rounded-full flex items-center justify-center overflow-hidden ring-4 ring-white">
                             <img src="{{ asset('storage/shofi.webp') }}" alt="Achmad Shofi Zakaria"
-                                class="w-full h-full object-cover transform transition-transform duration-700 group-hover/avatar:scale-110 filter contrast-105">
+                                class="w-full h-full object-cover transform transition-transform duration-700 group-hover/avatar:scale-110 filter contrast-105" referrerpolicy="no-referrer">
                         </div>
                     </div>
                     

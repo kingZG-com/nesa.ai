@@ -53,6 +53,7 @@ class AuthController extends Controller
             return redirect()->to('/dashboard');
 
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Google Auth Error: ' . $e->getMessage(), ['exception' => $e]);
             // Jika gagal, kembalikan ke landing page dengan pesan error
             return redirect()->to('/')->with('error', 'Autentikasi Google gagal: ' . $e->getMessage());
         }

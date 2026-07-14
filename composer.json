@@ -42,7 +42,7 @@
     "scripts": {
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#fdba74,#a78bfa\" \"php artisan serve\" \"pnpm run dev\" \"php artisan reverb:start\" --names=server,vite,reverb --kill-others"
+            "npx concurrently -c \"#93c5fd,#fdba74,#a78bfa\" \"php artisan serve --port=8000\" \"pnpm run dev\" \"php artisan reverb:start\" --names=server,vite,reverb --kill-others"
         ],
         "test": [
             "@php artisan config:clear --ansi @no_additional_args",

@@ -5,8 +5,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "serve": "php artisan serve",
-        "start": "php artisan serve & vite"
+        "serve": "php artisan serve --port=8088",
+        "start": "php artisan serve --port=8088 & vite"
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.1.0",
