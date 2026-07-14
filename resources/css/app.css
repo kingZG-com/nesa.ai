@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
-@import 'reveal.js/dist/reveal.css';
-@import 'reveal.js/dist/theme/white.css';
 
 @tailwind base;
 @tailwind components;
@@ -17,13 +15,6 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/* ═══════════════════════════════════════════════════
-   GLOBAL STYLES & TYPOGRAPHY
-═══════════════════════════════════════════════════ */
-body {
-    font-family: 'Outfit', sans-serif;
-}
-
 code {
     font-family: monospace;
     background: #f0f0f0;
@@ -33,163 +24,8 @@ code {
 }
 
 /* ═══════════════════════════════════════════════════
-   GLOBAL SCROLLBAR (Prioritas dari app.css)
-═══════════════════════════════════════════════════ */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-}
-
-/* Utility tambahan dari home.css (hanya berlaku jika class ini dipanggil) */
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-/* ═══════════════════════════════════════════════════
-   UTILITIES & BUTTONS
-═══════════════════════════════════════════════════ */
-.text-gradient {
-    background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bg-gradient-premium {
-    background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
-}
-
-.shadow-luxury {
-    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
-}
-
-.hero-btn-guru {
-    background: #10B981;
-    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
-}
-
-.hero-btn-siswa {
-    background: #4F46E5;
-    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
-}
-
-/* ═══════════════════════════════════════════════════
-   SIDEBAR & ANIMATIONS (Dari home.css)
-═══════════════════════════════════════════════════ */
-/* Sidebar Transition Logic */
-#sidebar {
-    width: 68px; /* Collapsed width */
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-#sidebar.expanded {
-    width: 280px; /* Expanded width */
-}
-
-/* Sidebar Text Transition */
-.sidebar-text {
-    opacity: 0;
-    width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    transition: opacity 0.2s ease, width 0.3s ease;
-    display: none;
-}
-
-#sidebar.expanded .sidebar-text {
-    display: block;
-    opacity: 1;
-    width: auto;
-}
-
-/* Activity Section Visibility */
-.activity-section {
-    opacity: 0;
-    pointer-events: none;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.2s ease;
-}
-
-#sidebar.expanded .activity-section {
-    opacity: 1;
-    pointer-events: auto;
-    height: auto;
-    margin-top: 1rem;
-}
-
-/* Custom Tooltip Logic */
-.custom-tooltip {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s;
-    position: absolute;
-    left: calc(100% + 12px);
-    top: 50%;
-    transform: translateY(-50%);
-    white-space: nowrap;
-    z-index: 100;
-    pointer-events: none;
-}
-
-/* Only show tooltip when sidebar is NOT expanded AND hovered */
-#sidebar:not(.expanded) .group\/item:hover .custom-tooltip {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* Keyframes & Animations */
-@keyframes fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in-up {
-    animation: fade-in-up 0.4s ease-out forwards;
-}
-
-@keyframes pulse-glow {
-    0%, 100% {
-        opacity: 0.4;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.typing-dot {
-    animation: pulse-glow 1.4s infinite ease-in-out both;
-}
-
-.typing-dot:nth-child(1) { animation-delay: -0.32s; }
-.typing-dot:nth-child(2) { animation-delay: -0.16s; }
-
-/* ═══════════════════════════════════════════════════
    NESA VENDOR CARDS — Modern Clean UI
+   Taruh di <head> atau file CSS utama
 ═══════════════════════════════════════════════════ */
 
 /* ── Container utama ── */

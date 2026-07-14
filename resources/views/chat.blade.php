@@ -1,8 +1,7 @@
 @extends('layouts.app')
-@section('title', 'SISTAN - Asisten andalan EDUPATH')
+@section('title', 'Nesa - Asisten AI Cerdas untuk Mahasiswa UNNES')
 
 @section('content')
-
     {{-- Main container utama --}}
     <main class="flex-1 flex flex-col h-full bg-slate-100 relative overflow-hidden">
 
@@ -15,12 +14,12 @@
 
                 <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
                     <div
-                        class="absolute -top-[10%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-indigo-300/35 blur-[130px]">
+                        class="absolute -top-[10%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-purple-300/35 blur-[130px]">
                     </div>
                     <div
-                        class="absolute -bottom-[10%] -right-[10%] w-[70vw] h-[70vw] rounded-full bg-emerald-300/35 blur-[130px]">
+                        class="absolute -bottom-[10%] -right-[10%] w-[70vw] h-[70vw] rounded-full bg-cyan-300/35 blur-[130px]">
                     </div>
-                    <div class="absolute top-[30%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-teal-300/35 blur-[140px]">
+                    <div class="absolute top-[30%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-indigo-300/35 blur-[140px]">
                     </div>
                 </div>
 
@@ -33,7 +32,7 @@
                 <div class="w-full max-w-3xl mx-auto flex flex-col items-center text-center relative z-10">
                     <div class="mb-8 md:mb-10 w-full">
                         <h1 class="text-4xl font-medium text-gradient tracking-tight leading-tight">
-                            Halo{{ $displayName === 'Akun Guest' ? '' : ' ' . $displayName }}, apa yang bisa Sistan bantu hari
+                            Halo{{ $displayName === 'Akun Guest' ? '' : ' ' . $displayName }}, apa yang bisa Nesa bantu hari
                             ini?
                         </h1>
                     </div>
@@ -41,28 +40,64 @@
                     <div class="w-full relative z-20">
                         {{-- Gradient border wrapper --}}
                         <div
-                            class="relative p-[2px] rounded-[1.5rem] md:rounded-full transition-all duration-300 bg-slate-200/70 hover:bg-slate-300/70 focus-within:bg-gradient-to-r focus-within:from-indigo-600 focus-within:to-emerald-500 shadow-lg focus-within:shadow-[0_0_30px_rgba(16,185,129,0.3)] group">
+                            class="relative p-[2px] rounded-[1.5rem] md:rounded-full transition-all duration-300 bg-slate-200/70 hover:bg-slate-300/70 focus-within:bg-gradient-to-r focus-within:from-purple-500 focus-within:to-cyan-500 shadow-lg focus-within:shadow-[0_0_30px_rgba(6,182,212,0.3)] group">
                             <div
                                 class="relative bg-white/80 backdrop-blur-xl rounded-[1.40rem] md:rounded-full flex flex-row items-center p-1.5 transition-all duration-300 focus-within:bg-white w-full">
 
+                                {{-- Mode Selector --}}
+                                <div class="relative shrink-0">
+                                    <div id="mode-dropdown"
+                                        class="absolute bottom-full left-0 mb-3 w-56 bg-white border border-slate-100 rounded-2xl shadow-xl overflow-hidden z-30 hidden origin-bottom-left animate-in fade-in zoom-in duration-200">
+                                        <div class="py-2 flex flex-col">
+                                            <div
+                                                class="px-4 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                Pilih Mode Layanan</div>
+                                            <button type="button" onclick="selectMode('smart')"
+                                                class="text-left px-4 py-3 text-sm font-medium text-slate-700 hover:bg-cyan-50 hover:text-cyan-700 flex items-center gap-3 transition-colors">
+                                                <i class="fas fa-brain text-cyan-500 w-4 text-center"></i> Smart Mode
+                                            </button>
+                                            <button type="button" onclick="selectMode('laundry')"
+                                                class="text-left px-4 py-3 text-sm font-medium text-slate-700 hover:bg-cyan-50 hover:text-cyan-700 flex items-center gap-3 border-t border-slate-50 transition-colors">
+                                                <i class="fas fa-tshirt text-cyan-500 w-4 text-center"></i> Mode Laundry
+                                            </button>
+                                            <button type="button" onclick="selectMode('mua')"
+                                                class="text-left px-4 py-3 text-sm font-medium text-slate-700 hover:bg-cyan-50 hover:text-cyan-700 flex items-center gap-3 border-t border-slate-50 transition-colors">
+                                                <i class="fas fa-magic text-cyan-500 w-4 text-center"></i> Mode MUA
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <button type="button" id="mode-btn" onclick="toggleDropdown(event, 'mode-dropdown')"
+                                        class="w-11 h-11 ml-1 flex items-center justify-center rounded-full text-slate-500 hover:bg-cyan-50 hover:text-cyan-600 transition-all focus:outline-none"
+                                        title="Pilih Mode">
+                                        <i id="mode-icon"
+                                            class="fas fa-atom text-lg bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent transition-transform duration-500 group-hover:rotate-180"></i>
+                                    </button>
+                                </div>
+
                                 {{-- 🔥 OPTIMASI MOBILE: min-h dinaikin biar lebih tinggi di HP 🔥 --}}
                                 <textarea id="main-prompt" rows="1"
-                                    class="flex-1 pl-4 bg-transparent text-slate-800 placeholder-slate-400 py-3 text-base md:text-[15px] focus:outline-none resize-none no-scrollbar first-letter:uppercase self-center leading-tight min-h-[44px]"
-                                    placeholder="Ketik pertanyaan untuk Sistan..."></textarea>
+                                    class="flex-1 bg-transparent text-slate-800 placeholder-slate-400 py-3 text-base md:text-[15px] focus:outline-none resize-none no-scrollbar first-letter:uppercase self-center leading-tight min-h-[44px]"
+                                    placeholder="Ketik pertanyaan untuk Nesa..."></textarea>
 
                                 {{-- Action Buttons --}}
                                 <div class="flex items-center gap-1.5 shrink-0 pr-1">
                                     <button type="button" id="voice-btn-main"
                                         onclick="toggleVoiceInput('main-prompt', 'voice-btn-main')"
-                                        class="w-11 h-11 rounded-full flex items-center justify-center text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all focus:outline-none">
+                                        class="w-11 h-11 rounded-full flex items-center justify-center text-slate-400 hover:bg-cyan-50 hover:text-cyan-600 transition-all focus:outline-none">
                                         <i class="fas fa-microphone-lines text-xl"></i>
                                     </button>
                                     <button type="button" onclick="submitPrompt(event)"
-                                        class="w-11 h-11 rounded-full bg-indigo-600 hover:to-emerald-600 text-white flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-emerald-500/40 focus:outline-none">
+                                        class="w-11 h-11 rounded-full bg-purple-600 hover:to-cyan-700 text-white flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-cyan-500/40 focus:outline-none">
                                         <i class="fas fa-location-arrow text-sm"></i>
                                     </button>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <p class="text-[10px] md:text-xs text-slate-600 font-medium tracking-wide opacity-90 px-4">
+                                Nesa adalah asisten virtual cerdas berbasis AI dan dapat melakukan kesalahan.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -73,12 +108,12 @@
 
                 <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden select-none">
                     <div
-                        class="absolute -top-[15%] -left-[10%] w-[65vw] h-[65vw] rounded-full bg-indigo-400/10 blur-[140px]">
+                        class="absolute -top-[15%] -left-[10%] w-[65vw] h-[65vw] rounded-full bg-purple-400/10 blur-[140px]">
                     </div>
                     <div
-                        class="absolute -bottom-[15%] -right-[10%] w-[65vw] h-[65vw] rounded-full bg-emerald-400/15 blur-[140px]">
+                        class="absolute -bottom-[15%] -right-[10%] w-[65vw] h-[65vw] rounded-full bg-cyan-400/15 blur-[140px]">
                     </div>
-                    <div class="absolute top-[35%] left-[25%] w-[45vw] h-[45vw] rounded-full bg-teal-400/10 blur-[140px]">
+                    <div class="absolute top-[35%] left-[25%] w-[45vw] h-[45vw] rounded-full bg-indigo-400/10 blur-[140px]">
                     </div>
                 </div>
 
@@ -106,16 +141,16 @@
                             class="hidden absolute top-full mt-2 w-48 bg-white border border-slate-200 rounded-xl shadow-[0_10px_25px_-5px_rgba(0,0,0,0.08)] py-1.5 z-50 animate-fade-in text-left left-1/2 -translate-x-1/2">
                             <button
                                 onclick="event.stopPropagation(); window.toggleDropdown(null, 'navbar-chat-dropdown'); window.renameChatFromNavbar()"
-                                class="group w-full px-3 py-2 flex items-center gap-2.5 text-xs font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors cursor-pointer">
+                                class="group w-full px-3 py-2 flex items-center gap-2.5 text-xs font-semibold text-slate-600 hover:bg-cyan-50 hover:text-cyan-700 transition-colors cursor-pointer">
                                 <i
-                                    class="fas fa-edit text-slate-400 w-3.5 text-center transition-colors group-hover:text-emerald-600"></i>
+                                    class="fas fa-edit text-slate-400 w-3.5 text-center transition-colors group-hover:text-cyan-600"></i>
                                 Ganti Nama
                             </button>
                             <button
                                 onclick="event.stopPropagation(); window.toggleDropdown(null, 'navbar-chat-dropdown'); window.pinChatFromNavbar()"
-                                class="group w-full px-3 py-2 flex items-center gap-2.5 text-xs font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors cursor-pointer border-t border-slate-50">
+                                class="group w-full px-3 py-2 flex items-center gap-2.5 text-xs font-semibold text-slate-600 hover:bg-cyan-50 hover:text-cyan-700 transition-colors cursor-pointer border-t border-slate-50">
                                 <i
-                                    class="fas fa-thumbtack text-slate-400 w-3.5 text-center transition-colors group-hover:text-emerald-600"></i>
+                                    class="fas fa-thumbtack text-slate-400 w-3.5 text-center transition-colors group-hover:text-cyan-600"></i>
                                 Sematkan Chat
                             </button>
                         </div>
@@ -131,15 +166,15 @@
                             class="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden hidden z-30">
                             <div class="py-1.5 flex flex-col">
                                 <button type="button" onclick="startNewChat()"
-                                    class="group text-left px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 flex items-center gap-3 transition-colors cursor-pointer">
+                                    class="group text-left px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-cyan-50 hover:text-cyan-700 flex items-center gap-3 transition-colors cursor-pointer">
                                     <i
-                                        class="fas fa-plus text-slate-400 w-4 text-center transition-colors group-hover:text-emerald-600"></i>
+                                        class="fas fa-plus text-slate-400 w-4 text-center transition-colors group-hover:text-cyan-600"></i>
                                     Mulai Chat Baru
                                 </button>
                                 <button type="button" onclick="pinChat()"
-                                    class="group text-left px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 flex items-center gap-3 border-t border-slate-50 transition-colors cursor-pointer">
+                                    class="group text-left px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-cyan-50 hover:text-cyan-700 flex items-center gap-3 border-t border-slate-50 transition-colors cursor-pointer">
                                     <i
-                                        class="fas fa-thumbtack text-slate-400 w-4 text-center transition-colors group-hover:text-emerald-600"></i>
+                                        class="fas fa-thumbtack text-slate-400 w-4 text-center transition-colors group-hover:text-cyan-600"></i>
                                     Sematkan Chat
                                 </button>
                             </div>
@@ -154,7 +189,7 @@
                         @foreach ($messages as $msg)
                             @if ($msg->role === 'user')
                                 <div class="flex justify-end w-full">
-                                    <div class="bg-indigo-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
+                                    <div class="bg-purple-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
                                         {{ $msg->message }}
                                     </div>
                                 </div>
@@ -194,23 +229,23 @@
                 <div
                     class="absolute bottom-0 left-0 right-0 w-full p-4 bg-gradient-to-t from-slate-100 via-slate-100/90 to-transparent z-20">
                     <div
-                        class="w-full max-w-3xl mx-auto relative p-[2px] rounded-[1.5rem] md:rounded-full transition-all duration-300 bg-white/70 hover:bg-white/90 focus-within:bg-gradient-to-r focus-within:from-indigo-600 focus-within:to-emerald-500 shadow-[0_-5px_20px_rgba(0,0,0,0.03)] focus-within:shadow-[0_0_20px_rgba(16,185,129,0.2)] group backdrop-blur-xl border border-slate-200 focus-within:border-transparent">
+                        class="w-full max-w-3xl mx-auto relative p-[2px] rounded-[1.5rem] md:rounded-full transition-all duration-300 bg-white/70 hover:bg-white/90 focus-within:bg-gradient-to-r focus-within:from-purple-500 focus-within:to-cyan-500 shadow-[0_-5px_20px_rgba(0,0,0,0.03)] focus-within:shadow-[0_0_20px_rgba(6,182,212,0.2)] group backdrop-blur-xl border border-slate-200 focus-within:border-transparent">
                         <div
                             class="relative bg-white/90 backdrop-blur-xl rounded-[1.40rem] md:rounded-full flex flex-row items-center p-1 md:p-1.5 transition-all duration-300 w-full">
 
                             {{-- 🔥 OPTIMASI MOBILE: min-h dinaikin biar sejajar ukurannya 🔥 --}}
                             <textarea id="chat-prompt" rows="1"
-                                class="flex-1 bg-transparent text-slate-800 placeholder-slate-400 px-3 md:px-4 py-4 md:py-3 text-base md:text-[15px] focus:outline-none resize-none no-scrollbar self-center leading-tight min-h-[44px]"
-                                style="max-height:160px;" placeholder="Tulis pertanyaan..."></textarea>
+                                class="flex-1 bg-transparent text-slate-800 placeholder-slate-400 px-3 md:px-4 py-4 md:py-3 text-base md:text-[15px] focus:outline-none resize-none no-scrollbar self-center leading-tight min-h-[64px] md:min-h-[44px]"
+                                style="max-height:160px;" placeholder="Ada lagi yang mau dicarikan, Bos?"></textarea>
 
                             <div class="flex items-center gap-1.5 shrink-0 pr-1">
                                 <button type="button" id="voice-btn-chat"
                                     onclick="toggleVoiceInput('chat-prompt', 'voice-btn-chat')"
-                                    class="w-11 h-11 rounded-full flex items-center justify-center text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all focus:outline-none">
+                                    class="w-11 h-11 rounded-full flex items-center justify-center text-slate-400 hover:bg-cyan-50 hover:text-cyan-600 transition-all focus:outline-none">
                                     <i class="fas fa-microphone-lines text-xl"></i>
                                 </button>
                                 <button type="button" onclick="submitChatFollowUp()"
-                                    class="w-11 h-11 rounded-full bg-indigo-600 hover:to-emerald-600 text-white flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-emerald-500/40 focus:outline-none">
+                                    class="w-11 h-11 rounded-full bg-purple-600 hover:to-cyan-700 text-white flex items-center justify-center transition-all duration-300 shadow-md hover:shadow-cyan-500/40 focus:outline-none">
                                     <i class="fas fa-location-arrow text-sm"></i>
                                 </button>
                             </div>
@@ -229,18 +264,18 @@
 
             <div
                 class="relative w-[95%] sm:w-full mx-auto max-w-2xl bg-white/90 border border-slate-200/60 rounded-[1.5rem] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.2)] overflow-hidden flex flex-col animate-fade-in-up transform transition-all duration-300 max-h-[75vh] md:max-h-[65vh] backdrop-blur-xl">
-                <div class="h-[3px] w-full bg-gradient-to-r from-indigo-600 to-emerald-500"></div>
+                <div class="h-[3px] w-full bg-gradient-to-r from-purple-500 to-cyan-500"></div>
 
                 <div class="p-3 md:p-4 flex items-center gap-2 bg-white border-b border-slate-100">
                     <div class="w-6 h-6 flex items-center justify-center text-slate-400">
                         <i
-                            class="fas fa-search text-sm md:text-base bg-gradient-to-tr from-indigo-600 to-emerald-500 bg-clip-text text-transparent"></i>
+                            class="fas fa-search text-sm md:text-base bg-gradient-to-tr from-purple-500 to-cyan-500 bg-clip-text text-transparent"></i>
                     </div>
                     <input type="text" id="search-input" oninput="window.handleSearchInput(this.value)"
                         placeholder="Ketik kata kunci atau topik obrolan..."
                         class="flex-1 bg-transparent border-none text-[13px] md:text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-none tracking-wide capitalize">
                     <button onclick="window.clearSearchInput()" id="btn-clear-search"
-                        class="hidden p-1.5 md:p-2 rounded-full text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-200 focus:outline-none cursor-pointer">
+                        class="hidden p-1.5 md:p-2 rounded-full text-slate-400 hover:text-purple-600 hover:bg-purple-50 transition-all duration-200 focus:outline-none cursor-pointer">
                         <i class="fas fa-times-circle text-[13px] md:text-sm"></i>
                     </button>
                     <span class="w-px h-5 bg-slate-200 mx-0.5"></span>
@@ -260,10 +295,10 @@
                         @forelse($chats as $chat)
                             <div onclick="window.loadSpecificChatFromSearch('{{ $chat->id }}')"
                                 data-title="{{ strtolower($chat->title) }}"
-                                class="search-item-card bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.1)] hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-200 cursor-pointer flex justify-between items-center group">
+                                class="search-item-card bg-white border border-slate-100 rounded-xl p-3 shadow-sm hover:shadow-[0_8px_20px_-6px_rgba(6,182,212,0.1)] hover:border-cyan-300 hover:bg-cyan-50/10 transition-all duration-200 cursor-pointer flex justify-between items-center group">
                                 <div class="flex items-center gap-3 truncate">
                                     <div
-                                        class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-200">
+                                        class="w-8 h-8 rounded-lg bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0 group-hover:bg-cyan-600 group-hover:text-white transition-all duration-200">
                                         <i class="fas fa-comment-alt text-xs"></i>
                                     </div>
                                     <span
@@ -294,7 +329,7 @@
                 </div>
                 <div>
                     <input type="text" id="rename-modal-input" maxlength="80"
-                        class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition-all"
+                        class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition-all"
                         placeholder="Judul baru...">
                 </div>
                 <div class="flex gap-2 justify-end mt-2">
@@ -303,7 +338,7 @@
                         Batal
                     </button>
                     <button onclick="window.confirmRenameModal()"
-                        class="px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-colors cursor-pointer shadow-md hover:shadow-emerald-500/30">
+                        class="px-4 py-2 text-xs font-bold text-white bg-cyan-600 hover:bg-cyan-700 rounded-xl transition-colors cursor-pointer shadow-md hover:shadow-cyan-500/30">
                         Simpan
                     </button>
                 </div>
