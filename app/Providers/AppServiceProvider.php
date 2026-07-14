@@ -44,7 +44,12 @@ class AppServiceProvider extends ServiceProvider
             }
             $avatarDisplay = $user->avatar ?? null; 
             $clickAction = 'window.toggleAccountModal(event)';
+
+            $chats = Auth::check()
+        ? Auth::user()->chats()->orderByDesc('updated_at')->get()
+        : collect();
         }
+
 
         $view->with([
             'avatarInitials' => $avatarInitials,
@@ -53,6 +58,7 @@ class AppServiceProvider extends ServiceProvider
             'clickAction'    => $clickAction,
             'avatarDisplay'  => $avatarDisplay,
             'fullName'       => $fullName,
+            'chats'          => $chats,
         ]);
     });
 }

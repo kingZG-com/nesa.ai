@@ -2,12 +2,36 @@
  * Nesa - Gabungan seluruh JavaScript
  * Simpan sebagai file terpisah, lalu sertakan di layout utama.
  */
-
+import ScrollReveal from "scrollreveal";
 // ==========================================
 // AUTO-GROW TEXTAREA + INIT
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-    // Auto-grow textarea
+    const isMobile = window.innerWidth < 768;
+
+    const sr = ScrollReveal({
+        origin: "bottom",
+        distance: isMobile ? "20px" : "50px",
+        duration: isMobile ? 800 : 1000,
+        delay: isMobile ? 50 : 200,
+        reset: false,
+    });
+
+    sr.reveal(".reveal-hero", {
+        origin: "top",
+        distance: isMobile ? "15px" : "30px",
+        duration: 1200,
+    });
+    sr.reveal(".reveal-fade", {
+        interval: isMobile ? 50 : 150,
+        distance: isMobile ? "20px" : "40px",
+    });
+    sr.reveal(".reveal-cards", {
+        interval: isMobile ? 50 : 100,
+        scale: 0.95,
+        duration: 1100,
+    });
+
     ["main-prompt", "chat-prompt"].forEach((id) => {
         const ta = document.getElementById(id);
         if (!ta) return;
@@ -48,7 +72,6 @@ window.closeSidebar = function () {
     sidebar.style.width = "";
     backdrop.classList.add("hidden");
 
-    // Hamburger hanya muncul kalau tidak sedang di chat
     const sedangDiChat =
         typeof currentChatId !== "undefined" && currentChatId !== null;
     if (window.innerWidth < 768 && !sedangDiChat) {
@@ -74,6 +97,9 @@ window.addEventListener("resize", () => {
     const backdrop = document.getElementById("sidebar-backdrop");
     const burger = document.getElementById("mobile-hamburger");
     const chatView = document.getElementById("chat-view");
+
+    if (!sidebar || !backdrop || !burger) return;
+
     const isChatActive = chatView && !chatView.classList.contains("hidden");
 
     if (window.innerWidth >= 768) {
@@ -98,10 +124,6 @@ if (typeof currentChatId === "undefined") {
     var currentChatId = null;
 }
 
-// ─────────────────────────────────────────────────────────────
-// HELPER: Sinkronkan currentChatId + update data-chat-id
-// Dipanggil setiap kali currentChatId berubah.
-// ─────────────────────────────────────────────────────────────
 function setCurrentChatId(id) {
     currentChatId = id;
     const chatView = document.getElementById("chat-view");
@@ -110,9 +132,7 @@ function setCurrentChatId(id) {
     }
 }
 
-// 🔥 Variabel global koneksi Reverb
 let currentEchoChannel = null;
-
 let activeMode = "smart";
 const placeholders = {
     smart: "Mencari jasa MUA wisuda yang terjangkau di Sekaran, beserta layanan laundry jas...",
@@ -143,17 +163,11 @@ window.subscribeToChatChannel = (chatId) => {
         const loadingElements = chatBox.querySelectorAll('[id^="load-"]');
         loadingElements.forEach((el) => el.remove());
 
-        chatBox.insertAdjacentHTML(
-            "beforeend",
-            `
-                <div class="flex justify-start w-full animate-fade-in-up">
-                    <div class="bg-indigo-50 border border-indigo-200 text-indigo-900 p-4 rounded-2xl max-w-[85%] shadow-sm text-sm relative">
-                        <span class="absolute -top-2.5 -right-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-[9px] font-extrabold px-2.5 py-0.5 rounded-full animate-pulse shadow-md border border-white">⚡ Live Reverb</span>
-                        ${parseMarkdown(data.message)}
-                    </div>
-                </div>
-                `,
-        );
+        const bubbleId = "reply-reverb-" + Date.now();
+        chatBox.insertAdjacentHTML("beforeend", createAIBubble(bubbleId, true));
+        const targetContainer = document.getElementById(bubbleId);
+        if (targetContainer)
+            targetContainer.innerHTML = parseMarkdown(data.message);
 
         setTimeout(() => {
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -167,11 +181,7 @@ window.subscribeToChatChannel = (chatId) => {
 window.toggleSidebar = () => {
     const sidebar = document.getElementById("sidebar");
     if (!sidebar) return;
-
     sidebar.classList.toggle("expanded");
-    const tooltip = sidebar.querySelector(
-        ".group\\/item:first-child .custom-tooltip",
-    );
 };
 
 window.backToLanding = () => {
@@ -253,7 +263,6 @@ window.backToLanding = () => {
                 "w-full",
                 "min-h-full",
             );
-
             const headingContainer =
                 landing.querySelector(".text-center") ||
                 landing.querySelector(".mb-10");
@@ -280,10 +289,14 @@ window.backToLanding = () => {
     if (scrollableContent) scrollableContent.scrollTop = 0;
 
     document.querySelectorAll(".sidebar-chat-btn").forEach((btn) => {
-        btn.classList.remove("bg-cyan-100", "text-cyan-800", "font-semibold");
+        btn.classList.remove(
+            "bg-emerald-100",
+            "text-emerald-800",
+            "font-semibold",
+        );
         btn.classList.add("text-slate-700", "hover:bg-slate-200/50");
         const svg = btn.querySelector("svg");
-        if (svg) svg.classList.replace("text-cyan-600", "text-slate-400");
+        if (svg) svg.classList.replace("text-emerald-600", "text-slate-400");
     });
 };
 
@@ -291,8 +304,8 @@ window.switchToChatView = () => {
     const landing = document.getElementById("landing-view");
     const chatView = document.getElementById("chat-view");
     const navbar = document.getElementById("main-navbar");
-    const burger = document.getElementById("mobile-hamburger"); // ← tambah
-    if (burger) burger.classList.add("hidden"); // ← tambah
+    const burger = document.getElementById("mobile-hamburger");
+    if (burger) burger.classList.add("hidden");
     if (navbar) navbar.classList.add("hidden");
 
     if (landing) {
@@ -358,7 +371,6 @@ window.openChatDropdown = (event, chatId) => {
     dropdown.classList.add("hidden");
     dropdown.dataset.chatId = chatId;
 
-    // ── Sinkronkan state pin dari row ke dropdown ──
     const row = document.getElementById(`sidebar-row-${chatId}`);
     const isPinned = row?.dataset.pinned === "1";
 
@@ -370,7 +382,7 @@ window.openChatDropdown = (event, chatId) => {
     if (pinText) pinText.textContent = isPinned ? "Lepaskan" : "Sematkan";
     if (pinIcon) {
         pinIcon.className = isPinned
-            ? "fas fa-thumbtack dropdown-pin-icon text-cyan-500 w-3.5 text-center"
+            ? "fas fa-thumbtack dropdown-pin-icon text-emerald-500 w-3.5 text-center"
             : "fas fa-thumbtack dropdown-pin-icon text-slate-400 w-3.5 text-center rotate-45 opacity-60";
     }
 
@@ -415,21 +427,16 @@ window.handleSidebarAction = (action) => {
     }
 };
 
-// Tutup dropdown kalau klik di luar
 document.addEventListener("click", (e) => {
     const dropdown = document.getElementById("sidebar-action-dropdown");
     const renameBox = document.getElementById("sidebar-rename-inline");
 
     if (dropdown && !dropdown.classList.contains("hidden")) {
-        if (!dropdown.contains(e.target)) {
-            closeChatDropdown();
-        }
+        if (!dropdown.contains(e.target)) closeChatDropdown();
     }
 
     if (renameBox && !renameBox.classList.contains("hidden")) {
-        if (!renameBox.contains(e.target)) {
-            window.cancelRename();
-        }
+        if (!renameBox.contains(e.target)) window.cancelRename();
     }
 
     const accountModal = document.getElementById("account-popup-modal");
@@ -501,7 +508,6 @@ window.deleteChat = async (chatId) => {
                 setTimeout(() => row.remove(), 220);
             }
 
-            // Hapus juga dari search modal
             const searchCard = document.querySelector(
                 `[onclick*="loadSpecificChatFromSearch('${chatId}')"]`,
             );
@@ -535,14 +541,14 @@ window.deleteChat = async (chatId) => {
 
                 if (totalRows === 0) {
                     const empty = `
-            <div id="sidebar-empty-state"
-                class="text-xs text-slate-400 italic px-3 py-2 flex items-center justify-center gap-2 w-full text-center">
-                <svg class="w-4 h-4 text-slate-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Belum ada aktivitas obrolan.
-            </div>`;
+                        <div id="sidebar-empty-state"
+                            class="text-xs text-slate-400 italic px-3 py-2 flex items-center justify-center gap-2 w-full text-center">
+                            <svg class="w-4 h-4 text-slate-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Belum ada aktivitas obrolan.
+                        </div>`;
                     regularList?.insertAdjacentHTML("afterbegin", empty);
                 }
             }, 300);
@@ -565,7 +571,6 @@ window.deleteChat = async (chatId) => {
 // ──────────────────────────────────────────
 let _renameChatId = null;
 
-// ─── Buka modal rename dengan ID yang eksplisit ───
 window.renameChat = (chatId) => {
     if (!chatId || chatId === "null" || chatId === "undefined") {
         showToast("⚠️ Tidak ada percakapan yang dipilih.", "error");
@@ -574,7 +579,6 @@ window.renameChat = (chatId) => {
 
     _renameChatId = String(chatId);
 
-    // Ambil judul saat ini: coba dari sidebar dulu, fallback ke navbar title
     const btn = document.getElementById(`sidebar-chat-${_renameChatId}`);
     const titleSpan = btn ? btn.querySelector(".sidebar-chat-title") : null;
     const navbarTitle = document.getElementById("chat-title");
@@ -596,14 +600,12 @@ window.renameChat = (chatId) => {
     }, 100);
 };
 
-// ─── Tutup modal ───
 window.closeRenameModal = () => {
     const modal = document.getElementById("rename-modal");
     if (modal) modal.classList.add("hidden");
     _renameChatId = null;
 };
 
-// ─── Simpan perubahan nama ───
 window.confirmRenameModal = async () => {
     const input = document.getElementById("rename-modal-input");
     if (!input || !_renameChatId) return;
@@ -633,7 +635,6 @@ window.confirmRenameModal = async () => {
         const data = await response.json();
 
         if (response.ok && (data.success || data.status === "success")) {
-            // Update judul di sidebar
             const sidebarBtn = document.getElementById(
                 `sidebar-chat-${idToRename}`,
             );
@@ -642,13 +643,11 @@ window.confirmRenameModal = async () => {
                 : null;
             if (sidebarTitleSpan) sidebarTitleSpan.textContent = newTitle;
 
-            // Update judul di navbar header (jika ini chat yang aktif)
             if (String(currentChatId) === String(idToRename)) {
                 const chatTitle = document.getElementById("chat-title");
                 if (chatTitle) chatTitle.textContent = newTitle;
             }
 
-            // Update di modal search
             const searchCard = document.querySelector(
                 `[onclick*="loadSpecificChatFromSearch('${idToRename}')"] .search-item-title`,
             );
@@ -673,7 +672,6 @@ window.confirmRenameModal = async () => {
     }
 };
 
-// ─── Keyboard handler modal rename ───
 document.addEventListener("DOMContentLoaded", () => {
     const renameInput = document.getElementById("rename-modal-input");
     if (renameInput) {
@@ -690,7 +688,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// ─── Inline rename (sidebar) — tetap dipertahankan untuk kompatibilitas ───
 window.confirmRename = async () => {
     const renameInput = document.getElementById("sidebar-rename-input");
     const renameBox = document.getElementById("sidebar-rename-inline");
@@ -703,7 +700,6 @@ window.confirmRename = async () => {
     }
 
     renameBox.classList.add("hidden");
-
     const idToRename = _renameChatId;
     _renameChatId = null;
 
@@ -810,7 +806,6 @@ window.pinChat = async (chatId) => {
                     ? "📌 Percakapan berhasil disematkan."
                     : "📌 Sematan percakapan dilepas.",
             );
-
             _applySidebarPinState(chatId, isPinned);
         } else {
             showToast(
@@ -825,17 +820,12 @@ window.pinChat = async (chatId) => {
     }
 };
 
-// ==========================================
-// 📌 HELPER: TERAPKAN STATE PIN KE SIDEBAR DOM
-// ==========================================
 function _applySidebarPinState(chatId, isPinned) {
     const row = document.getElementById(`sidebar-row-${chatId}`);
     if (!row) return;
 
-    // ── 1. Tandai row dengan data-pinned ──
     row.dataset.pinned = isPinned ? "1" : "0";
 
-    // ── 2. Update ikon aksi di pojok kanan row ──
     const actionArea = row.querySelector(".row-action-area");
     if (actionArea) {
         const dotsBtn = actionArea.querySelector(".btn-dots");
@@ -849,7 +839,6 @@ function _applySidebarPinState(chatId, isPinned) {
         }
     }
 
-    // ── 3. Update label + ikon di dropdown floating ──
     const dropdown = document.getElementById("sidebar-action-dropdown");
     if (dropdown && dropdown.dataset.chatId === String(chatId)) {
         const pinBtn = dropdown.querySelector(".dropdown-pin-btn");
@@ -858,13 +847,12 @@ function _applySidebarPinState(chatId, isPinned) {
         if (pinBtn) pinBtn.dataset.pinned = isPinned ? "1" : "0";
         if (pinIcon) {
             pinIcon.className = isPinned
-                ? "fas fa-thumbtack dropdown-pin-icon text-cyan-500 w-3.5 text-center"
+                ? "fas fa-thumbtack dropdown-pin-icon text-emerald-500 w-3.5 text-center"
                 : "fas fa-thumbtack dropdown-pin-icon text-slate-400 w-3.5 text-center rotate-45 opacity-60";
         }
         if (pinText) pinText.textContent = isPinned ? "Lepaskan" : "Sematkan";
     }
 
-    // ── 4. Pindahkan row ke list yang tepat ──
     const pinnedList = document.getElementById("sidebar-pinned-list");
     const regularList = document.getElementById("sidebar-regular-list");
 
@@ -873,7 +861,6 @@ function _applySidebarPinState(chatId, isPinned) {
         row.classList.add("animate-fade-in-up");
         setTimeout(() => row.classList.remove("animate-fade-in-up"), 400);
     } else if (!isPinned && regularList) {
-        // Kembalikan ke posisi asalnya berdasarkan data-order
         const targetOrder = parseInt(row.dataset.order ?? "0", 10);
         const siblings = Array.from(
             regularList.querySelectorAll(".sidebar-item-wrapper"),
@@ -955,14 +942,12 @@ function showConfirm(title, message, confirmText = "Ya", cancelText = "Batal") {
                 overlay.remove();
                 resolve(true);
             });
-
         overlay
             .querySelector("#confirm-cancel-btn")
             .addEventListener("click", () => {
                 overlay.remove();
                 resolve(false);
             });
-
         overlay.addEventListener("click", (e) => {
             if (e.target === overlay) {
                 overlay.remove();
@@ -993,8 +978,8 @@ window.renderCards = (filterType = "all") => {
 function createCardHTML(item) {
     const isMUA = item.type === "mua";
     const badgeColor = isMUA
-        ? "bg-purple-100 text-purple-700"
-        : "bg-cyan-100 text-cyan-700";
+        ? "bg-indigo-100 text-indigo-700"
+        : "bg-emerald-100 text-emerald-700";
     return `
         <div class="group bg-white rounded-2xl border border-slate-100 p-4 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col h-full text-left">
             <div class="flex justify-between items-start mb-3">
@@ -1010,38 +995,83 @@ function createCardHTML(item) {
         </div>`;
 }
 
-function parseMarkdown(text) {
-    if (text.includes('<div class="nesa-cards">')) {
-        // Jangan escape HTML-nya, biarkan utuh.
-        // Opsional: replace \n jadi <br> untuk teks pengantarnya,
-        // tapi hati-hati jangan sampai merusak struktur <div class="nesa-cards">
-        return text;
-    }
+// ==========================================
+// 💬 BUBBLE AI — Template dengan tombol Salin
+// ==========================================
 
-    // Flow normal untuk teks biasa
-    const escaped = text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+/**
+ * Buat template HTML bubble balasan AI
+ * @param {string} bubbleId   - ID unik untuk konten bubble
+ * @param {boolean} isLive    - Apakah ini dari Reverb (tambah badge ⚡ Live)
+ */
+function createAIBubble(bubbleId, isLive = false) {
+    const liveBadge = isLive
+        ? `<span class="absolute -top-2.5 -right-2 bg-gradient-to-r from-indigo-600 to-emerald-500 text-white text-[9px] font-extrabold px-2.5 py-0.5 rounded-full animate-pulse shadow-md border border-white">⚡ Live Reverb</span>`
+        : "";
 
-    return escaped
-        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-        .replace(/\*(.+?)\*/g, "<em>$1</em>")
-        .replace(/~~(.+?)~~/g, "<del>$1</del>")
-        .replace(/`(.+?)`/g, "<code>$1</code>")
-        .replace(/\n/g, "<br>");
+    return `
+    <div class="flex justify-start w-full animate-fade-in-up group/bubble">
+        <div class="flex flex-col gap-1.5 max-w-[85%]">
+            <div id="${bubbleId}" class="bg-slate-100 border border-slate-200 text-slate-800 p-4 rounded-2xl shadow-sm text-sm relative">
+                ${liveBadge}
+            </div>
+            <div class="flex items-center gap-3 pl-1 opacity-0 group-hover/bubble:opacity-100 transition-opacity duration-200">
+                <button
+                    onclick="window.copyBubble('${bubbleId}')"
+                    class="inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-400 hover:text-emerald-600 transition-colors cursor-pointer"
+                    title="Salin jawaban">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                    Salin
+                </button>
+            </div>
+        </div>
+    </div>`;
 }
 
-function escapeHtml(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
+// ==========================================
+// 📋 FUNGSI SALIN ISI BUBBLE
+// ==========================================
+window.copyBubble = function (bubbleId) {
+    const el = document.getElementById(bubbleId);
+    if (!el) return;
+
+    const text = (el.innerText || el.textContent || "").trim();
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard
+            .writeText(text)
+            .then(() => {
+                showToast("✅ Jawaban berhasil disalin!");
+            })
+            .catch(() => _fallbackCopy(text));
+    } else {
+        _fallbackCopy(text);
+    }
+};
+
+function _fallbackCopy(text) {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+        document.execCommand("copy");
+        showToast("✅ Jawaban berhasil disalin!");
+    } catch {
+        showToast("❌ Gagal menyalin teks.", "error");
+    }
+    document.body.removeChild(ta);
 }
 
 // ==========================================
 // ⌨️ SMART TYPING EFFECT (TEXT + CARD FADE-IN)
 // ==========================================
-async function typeNode(node, container, speed = 15) {
+async function typeNode(node, container, speed = 2) {
     if (node.nodeType === Node.TEXT_NODE) {
         // Kalau ini teks, kita ketik huruf per huruf
         let text = node.nodeValue;
@@ -1050,8 +1080,8 @@ async function typeNode(node, container, speed = 15) {
             await new Promise((r) => setTimeout(r, speed));
 
             // Auto scroll ke bawah tiap ngetik
-            const chatBox = document.getElementById("chat-messages");
-            if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+            // const chatBox = document.getElementById("chat-messages");
+            // if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
         }
     } else if (node.nodeType === Node.ELEMENT_NODE) {
         // Bikin elemen HTML yang sesuai
@@ -1105,8 +1135,93 @@ async function applyTypingEffect(targetContainer, htmlContent) {
 
     // Mulai ngetik simulasinya
     for (let child of tempDiv.childNodes) {
-        await typeNode(child, targetContainer, 5); // Kecepatan ngetik 10ms per huruf
+        await typeNode(child, targetContainer, 1);
     }
+}
+
+// ==========================================
+// 🎨 PARSE MARKDOWN & FILE INTERCEPTOR
+// ==========================================
+function parseMarkdown(text) {
+    if (text.includes('<div class="nesa-cards">')) {
+        return text;
+    }
+
+    // 1. Ekstrak dan simpan tag [FILE_READY] ke tempat aman (Array)
+    const cards = [];
+    const fileRegex = /\[FILE_READY title="(.*?)"\]([\s\S]*?)\[\/FILE_READY\]/g;
+    
+    let textWithoutCards = text.replace(fileRegex, function(match, title, content) {
+        // Amankan spasi dan enter untuk dikirim ke backend
+        const encodedContent = encodeURIComponent(content.trim());
+        const placeholder = `__NESA_CARD_${cards.length}__`;
+        
+        const cardHtml = `
+        <div class="nesa-card mt-3 bg-white border border-indigo-100 rounded-2xl p-4 shadow-sm relative overflow-hidden group">
+            <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-indigo-500 to-emerald-500"></div>
+            <div class="flex items-start justify-between mb-3 pl-2">
+                <div>
+                    <h4 class="text-sm font-bold text-slate-800">${escapeHtml(title)}</h4>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Draf dokumen siap diunduh</p>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 shadow-sm">
+                    <i class="fas fa-file-alt text-sm"></i>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 rounded-xl p-3 mb-4 max-h-32 overflow-y-auto text-xs text-slate-600 font-mono no-scrollbar border border-slate-100 leading-relaxed">
+                ${escapeHtml(content.substring(0, 150))}... <i class="text-indigo-400 font-semibold">(pratinjau disembunyikan)</i>
+            </div>
+
+            <div class="flex items-center gap-2 pl-2">
+                <button type="button" onclick="window.downloadFile('${title}', '${encodedContent}', 'pdf')" class="flex-1 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-rose-100">
+                    <i class="fas fa-file-pdf"></i> Unduh PDF
+                </button>
+                <button type="button" onclick="window.downloadFile('${title}', '${encodedContent}', 'word')" class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-200 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-blue-100">
+                    <i class="fas fa-file-word"></i> Unduh Word
+                </button>
+            </div>
+        </div>
+        `;
+        
+        cards.push(cardHtml);
+        return placeholder; // Ganti HTML tadi sama teks penanda sementara
+    });
+
+    // 2. Sekarang aman untuk mengubah teks sisa (hindari XSS)
+    let escaped = textWithoutCards
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    // 3. Render format Markdown biasa
+    let parsed = escaped
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\*(.+?)\*/g, "<em>$1</em>")
+        .replace(/~~(.+?)~~/g, "<del>$1</del>")
+        .replace(/`(.+?)`/g, "<code>$1</code>")
+        .replace(/\n/g, "<br>");
+
+    // 4. Panggil kembali HTML Card yang kita simpan tadi dan tempel utuh
+    cards.forEach((card, index) => {
+        parsed = parsed.replace(`__NESA_CARD_${index}__`, card);
+    });
+
+    return parsed;
+}
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ==========================================
+// ✨ RENDER AI RESPONSE — Langsung tampil, tanpa typing effect
+// ==========================================
+function renderAIResponse(targetContainer, htmlContent) {
+    targetContainer.innerHTML = htmlContent;
+    const chatBox = document.getElementById("chat-messages");
+    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 // ==========================================
@@ -1129,7 +1244,7 @@ window.submitPrompt = async (e) => {
         "beforeend",
         `
         <div class="flex justify-end w-full animate-fade-in-up">
-            <div class="bg-purple-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
+            <div class="bg-indigo-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
                 ${escapeHtml(text)}
             </div>
         </div>
@@ -1137,13 +1252,11 @@ window.submitPrompt = async (e) => {
     );
     inputEl.value = "";
 
-    const scrollToBottom = () => {
-        setTimeout(() => {
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }, 50);
-    };
-
-    scrollToBottom();
+    // const scrollToBottom = () =>
+    //     setTimeout(() => {
+    //         chatBox.scrollTop = chatBox.scrollHeight;
+    //     }, 50);
+    // scrollToBottom();
 
     const loadingId = "load-" + Date.now();
     chatBox.insertAdjacentHTML(
@@ -1152,17 +1265,16 @@ window.submitPrompt = async (e) => {
         <div id="${loadingId}" class="flex justify-start w-full">
             <div class="bg-slate-100 text-slate-800 px-5 py-3 rounded-2xl">
                 <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-purple-600 rounded-full animate-bounce"></div>
-                    <div class="w-2 h-2 bg-purple-600 rounded-full animate-bounce delay-100"></div>
-                    <div class="w-2 h-2 bg-purple-600 rounded-full animate-bounce delay-200"></div>
-                    <span class="text-sm ml-2">Nesa sedang memproses permintaan...</span>
+                    <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
+                    <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce delay-100"></div>
+                    <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce delay-200"></div>
+                    <span class="text-sm ml-2">Sistan sedang memproses permintaan...</span>
                 </div>
             </div>
         </div>
         `,
     );
-
-    scrollToBottom();
+    // scrollToBottom();
 
     try {
         const response = await fetch("/api/chat/prompt", {
@@ -1187,34 +1299,16 @@ window.submitPrompt = async (e) => {
             document.getElementById(loadingId)?.remove();
             chatBox.insertAdjacentHTML(
                 "beforeend",
-                `
-                <div class="flex justify-start w-full animate-fade-in-up">
-                    <div class="bg-amber-50 border border-amber-200 text-amber-800 p-5 rounded-2xl max-w-[85%] shadow-sm flex flex-col gap-3.5 text-left select-none">
-                        <div class="flex items-center gap-2.5">
-                            <i class="fas fa-lock text-amber-600 text-base shrink-0"></i>
-                            <strong class="text-sm font-bold tracking-wide text-amber-900">Batas Penggunaan Gratis Terlampaui</strong>
-                        </div>
-                        <div class="text-xs font-medium text-amber-800/90 leading-relaxed tracking-wide">
-                            ${data.message}
-                        </div>
-                        <div class="pt-1">
-                            <button onclick="window.openGoogleLoginModal()" 
-                                class="group/btn inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-md hover:shadow-purple-500/20 cursor-pointer focus:outline-none">
-                                <i class="fab fa-google text-sm transition-transform group-hover/btn:scale-110 shrink-0"></i>
-                                <span>Autentikasi via Google</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                `,
+                _buildLimitReachedHTML(data.message),
             );
-            scrollToBottom();
+            // scrollToBottom();
             return;
         }
 
         if (data.status === "success" || data.success === true) {
+            document.getElementById(loadingId)?.remove();
+
             if (data.is_new_chat) {
-                // 1. Setup Chat Baru
                 setCurrentChatId(data.chat_id);
                 window.subscribeToChatChannel(currentChatId);
                 window.history.pushState(
@@ -1227,57 +1321,22 @@ window.submitPrompt = async (e) => {
                 if (chatTitle) chatTitle.textContent = data.chat_title;
                 injectTitleToSidebar(data.chat_id, data.chat_title);
                 injectTitleToSearchModal(data.chat_id, data.chat_title);
-
-                // 2. Tampilkan Balasan AI dengan Typing Effect
-                const aiReply = data.response || data.message;
-                document.getElementById(loadingId)?.remove(); // Hapus loading!
-
-                const bubbleId = "reply-" + Date.now();
-                chatBox.insertAdjacentHTML(
-                    "beforeend",
-                    `
-                    <div class="flex justify-start w-full animate-fade-in-up">
-                        <div id="${bubbleId}" class="bg-slate-100 border border-slate-200 text-slate-800 p-4 rounded-2xl max-w-[85%] shadow-sm text-sm relative">
-                        </div>
-                    </div>
-                    `,
-                );
-
-                const targetContainer = document.getElementById(bubbleId);
-                const finalHTML = parseMarkdown(aiReply);
-                applyTypingEffect(targetContainer, finalHTML);
-                scrollToBottom();
-            } else {
-                // 1. Setup Lanjutan Chat (GAK PAKE SETTIMEOUT 3 DETIK!)
-                document.getElementById(loadingId)?.remove(); // Langsung hapus loading!
-
-                const aiReply = data.response || data.message;
-                const bubbleId = "reply-" + Date.now();
-
-                // 2. Siapkan wadah kosong
-                chatBox.insertAdjacentHTML(
-                    "beforeend",
-                    `
-                    <div class="flex justify-start w-full animate-fade-in-up">
-                        <div id="${bubbleId}" class="bg-slate-100 border border-slate-200 text-slate-800 p-4 rounded-2xl max-w-[85%] shadow-sm text-sm relative">
-                        </div>
-                    </div>
-                    `,
-                );
-
-                // 3. Langsung hajar efek ngetiknya!
-                const targetContainer = document.getElementById(bubbleId);
-                const finalHTML = parseMarkdown(aiReply);
-                applyTypingEffect(targetContainer, finalHTML);
-                scrollToBottom();
             }
+
+            const aiReply = data.response || data.message;
+            const bubbleId = "reply-" + Date.now();
+            chatBox.insertAdjacentHTML("beforeend", createAIBubble(bubbleId));
+            applyTypingEffect(
+                document.getElementById(bubbleId),
+                parseMarkdown(aiReply),
+            );
+            // scrollToBottom();
         } else {
             throw new Error(
                 data.message || "Gagal memproses respons dari server.",
             );
         }
     } catch (error) {
-        // Handling kalau ada error API / Jaringan
         document.getElementById(loadingId)?.remove();
         console.error("Detail Kesalahan:", error);
         chatBox.insertAdjacentHTML(
@@ -1292,7 +1351,7 @@ window.submitPrompt = async (e) => {
         );
     }
 
-    scrollToBottom();
+    // scrollToBottom();
 };
 
 // ─── UTILITY: SUNTIK SIDEBAR ───
@@ -1304,10 +1363,14 @@ function injectTitleToSidebar(chatId, chatTitle) {
     if (emptyState) emptyState.remove();
 
     document.querySelectorAll(".sidebar-chat-btn").forEach((btn) => {
-        btn.classList.remove("bg-cyan-100", "text-cyan-800", "font-semibold");
+        btn.classList.remove(
+            "bg-emerald-100",
+            "text-emerald-800",
+            "font-semibold",
+        );
         btn.classList.add("text-slate-700", "hover:bg-slate-200/50");
         const svg = btn.querySelector("svg");
-        if (svg) svg.classList.replace("text-cyan-600", "text-slate-400");
+        if (svg) svg.classList.replace("text-emerald-600", "text-slate-400");
     });
 
     const innerContainer = sidebarContainer.querySelector(
@@ -1321,21 +1384,18 @@ function injectTitleToSidebar(chatId, chatTitle) {
         <div class="relative w-full group/row sidebar-item-wrapper animate-fade-in-up"
              id="sidebar-row-${chatId}"
              data-pinned="0">
-
             <button onclick="window.loadSpecificChat('${chatId}')"
                 id="sidebar-chat-${chatId}"
-                class="w-full text-left pl-3 pr-10 py-2 text-sm bg-cyan-100 text-cyan-800 font-semibold rounded-lg cursor-pointer truncate transition-colors flex items-center gap-2 sidebar-chat-btn">
-                <svg class="w-4 h-4 text-cyan-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="w-full text-left pl-3 pr-10 py-2 text-sm bg-emerald-100 text-emerald-800 font-semibold rounded-lg cursor-pointer truncate transition-colors flex items-center gap-2 sidebar-chat-btn">
+                <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
                     </path>
                 </svg>
                 <span class="sidebar-chat-title truncate sidebar-text">${escapeHtml(chatTitle)}</span>
             </button>
-
             <div class="row-action-area absolute right-1 top-1/2 -translate-y-1/2 flex items-center z-30 sidebar-text">
-                <span class="btn-pin-badge hidden group-hover/row:hidden
-                             w-6 h-6 flex items-center justify-center text-cyan-400 pointer-events-none">
+                <span class="btn-pin-badge hidden group-hover/row:hidden w-6 h-6 flex items-center justify-center text-emerald-400 pointer-events-none">
                     <i class="fas fa-thumbtack text-[10px]"></i>
                 </span>
                 <button
@@ -1364,16 +1424,16 @@ function injectTitleToSearchModal(chatId, chatTitle) {
         "afterbegin",
         `
         <div onclick="window.loadSpecificChatFromSearch('${chatId}')" data-title="${chatTitle.toLowerCase()}"
-            class="search-item-card bg-white border border-slate-100 rounded-xl p-3.5 shadow-sm hover:shadow-[0_8px_20px_-6px_rgba(6,182,212,0.1)] hover:border-cyan-300/80 hover:bg-gradient-to-r hover:from-white hover:to-cyan-50/10 transition-all duration-200 cursor-pointer flex justify-between items-center group animate-fade-in-up">
+            class="search-item-card bg-white border border-slate-100 rounded-xl p-3.5 shadow-sm hover:shadow-[0_8px_20px_-6px_rgba(16,185,129,0.1)] hover:border-emerald-300/80 hover:bg-gradient-to-r hover:from-white hover:to-emerald-50/10 transition-all duration-200 cursor-pointer flex justify-between items-center group animate-fade-in-up">
             <div class="flex items-center gap-3.5 truncate">
-                <div class="w-8 h-8 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center shrink-0 group-hover:bg-cyan-600 group-hover:text-white group-hover:shadow-[0_4px_12px_rgba(6,182,212,0.4)] transition-all duration-200">
+                <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 group-hover:bg-emerald-600 group-hover:text-white group-hover:shadow-[0_4px_12px_rgba(16,185,129,0.4)] transition-all duration-200">
                     <i class="fas fa-comment-alt text-xs"></i>
                 </div>
                 <span class="search-item-title text-xs font-bold text-slate-700 group-hover:text-slate-900 transition-colors duration-200 truncate">${escapeHtml(chatTitle)}</span>
             </div>
             <div class="flex items-center gap-2 shrink-0">
                 <span class="text-[10px] text-slate-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">Baru saja</span>
-                <i class="fas fa-chevron-right text-slate-300 group-hover:text-cyan-600 group-hover:translate-x-0.5 transition-all duration-200 text-[10px] pr-1"></i>
+                <i class="fas fa-chevron-right text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all duration-200 text-[10px] pr-1"></i>
             </div>
         </div>
         `,
@@ -1397,7 +1457,7 @@ window.submitChatFollowUp = async () => {
         "beforeend",
         `
         <div class="flex justify-end w-full animate-fade-in-up">
-            <div class="bg-purple-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
+            <div class="bg-indigo-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
                 ${escapeHtml(text)}
             </div>
         </div>
@@ -1407,12 +1467,10 @@ window.submitChatFollowUp = async () => {
     inputEl.value = "";
     inputEl.focus();
 
-    const scrollToBottom = () => {
+    const scrollToBottom = () =>
         setTimeout(() => {
             chatBox.scrollTop = chatBox.scrollHeight;
         }, 50);
-    };
-
     scrollToBottom();
 
     const loadingId = "load-" + Date.now();
@@ -1422,16 +1480,15 @@ window.submitChatFollowUp = async () => {
         <div id="${loadingId}" class="flex justify-start w-full">
             <div class="bg-slate-100 text-slate-800 px-5 py-3 rounded-2xl">
                 <div class="flex items-center gap-2">
-                    <div class="w-2 h-2 bg-purple-600 rounded-full animate-bounce"></div>
-                    <div class="w-2 h-2 bg-purple-600 rounded-full animate-bounce delay-100"></div>
-                    <div class="w-2 h-2 bg-purple-600 rounded-full animate-bounce delay-200"></div>
-                    <span class="text-sm ml-2">Nesa sedang memproses permintaan...</span>
+                    <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce"></div>
+                    <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce delay-100"></div>
+                    <div class="w-2 h-2 bg-indigo-600 rounded-full animate-bounce delay-200"></div>
+                    <span class="text-sm ml-2">Sistan sedang memproses permintaan...</span>
                 </div>
             </div>
         </div>
         `,
     );
-
     scrollToBottom();
 
     try {
@@ -1457,56 +1514,22 @@ window.submitChatFollowUp = async () => {
             document.getElementById(loadingId)?.remove();
             chatBox.insertAdjacentHTML(
                 "beforeend",
-                `
-                <div class="flex justify-start w-full animate-fade-in-up">
-                    <div class="bg-amber-50 border border-amber-200 text-amber-800 p-5 rounded-2xl max-w-[85%] shadow-sm flex flex-col gap-3.5 text-left select-none">
-                        <div class="flex items-center gap-2.5">
-                            <i class="fas fa-lock text-amber-600 text-base shrink-0"></i>
-                            <strong class="text-sm font-bold tracking-wide text-amber-900">Batas Penggunaan Gratis Terlampaui</strong>
-                        </div>
-                        <div class="text-xs font-medium text-amber-800/90 leading-relaxed tracking-wide">
-                            ${data.message}
-                        </div>
-                        <div class="pt-1">
-                            <button onclick="window.openGoogleLoginModal()" 
-                                class="group/btn inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-md hover:shadow-purple-500/20 cursor-pointer focus:outline-none">
-                                <i class="fab fa-google text-sm transition-transform group-hover/btn:scale-110 shrink-0"></i>
-                                <span>Autentikasi via Google</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                `,
+                _buildLimitReachedHTML(data.message),
             );
             scrollToBottom();
             return;
         }
 
         if (data.status === "success" || data.success === true) {
-            // 1. Langsung hapus loader tanpa ditunda-tunda!
-            if (document.getElementById(loadingId)) {
-                document.getElementById(loadingId).remove();
-            }
+            document.getElementById(loadingId)?.remove();
 
             const aiReply = data.response || data.message;
             const bubbleId = "reply-" + Date.now();
-
-            // 2. Siapkan bungkus pesan (bubble chat kosong)
-            chatBox.insertAdjacentHTML(
-                "beforeend",
-                `
-        <div class="flex justify-start w-full animate-fade-in-up">
-            <div id="${bubbleId}" class="bg-slate-100 border border-slate-200 text-slate-800 p-4 rounded-2xl max-w-[85%] shadow-sm text-sm relative">
-            </div>
-        </div>
-        `,
+            chatBox.insertAdjacentHTML("beforeend", createAIBubble(bubbleId));
+            applyTypingEffect(
+                document.getElementById(bubbleId),
+                parseMarkdown(aiReply),
             );
-
-            // 3. Terapkan efek ngetik ke dalam kontainer tersebut
-            const targetContainer = document.getElementById(bubbleId);
-            const finalHTML = parseMarkdown(aiReply);
-
-            applyTypingEffect(targetContainer, finalHTML);
             scrollToBottom();
         }
     } catch (error) {
@@ -1524,8 +1547,33 @@ window.submitChatFollowUp = async () => {
         );
     }
 
-    scrollToBottom();
+    // scrollToBottom();
 };
+
+// ==========================================
+// 🔒 HELPER: LIMIT REACHED HTML
+// ==========================================
+function _buildLimitReachedHTML(message) {
+    return `
+    <div class="flex justify-start w-full animate-fade-in-up">
+        <div class="bg-amber-50 border border-amber-200 text-amber-800 p-5 rounded-2xl max-w-[85%] shadow-sm flex flex-col gap-3.5 text-left select-none">
+            <div class="flex items-center gap-2.5">
+                <i class="fas fa-lock text-amber-600 text-base shrink-0"></i>
+                <strong class="text-sm font-bold tracking-wide text-amber-900">Batas Penggunaan Gratis Terlampaui</strong>
+            </div>
+            <div class="text-xs font-medium text-amber-800/90 leading-relaxed tracking-wide">
+                ${message}
+            </div>
+            <div class="pt-1">
+                <button onclick="window.openGoogleLoginModal()"
+                    class="group/btn inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-emerald-500 hover:from-indigo-700 hover:to-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-md hover:shadow-emerald-500/20 cursor-pointer focus:outline-none">
+                    <i class="fab fa-google text-sm transition-transform group-hover/btn:scale-110 shrink-0"></i>
+                    <span>Autentikasi via Google</span>
+                </button>
+            </div>
+        </div>
+    </div>`;
+}
 
 // ==========================================
 // 🔑 GOOGLE IDENTITY SERVICES
@@ -1563,7 +1611,7 @@ window.handleCredentialResponse = function (response) {
         "beforeend",
         `
         <div id="${verifyId}" class="flex justify-start w-full animate-fade-in-up">
-            <div class="bg-purple-50 text-purple-800 px-5 py-3 rounded-2xl border border-purple-100">
+            <div class="bg-indigo-50 text-indigo-800 px-5 py-3 rounded-2xl border border-indigo-100">
                 <i class="fas fa-spinner animate-spin mr-2"></i> Memverifikasi akun Google Anda...
             </div>
         </div>
@@ -1679,7 +1727,7 @@ window.toggleVoiceInput = function (targetInputId, btnId) {
         window.isRecording = true;
         if (btn) {
             btn.innerHTML = '<i class="fas fa-stop-circle text-xl"></i>';
-            btn.classList.remove("text-slate-400", "hover:text-cyan-600");
+            btn.classList.remove("text-slate-400", "hover:text-emerald-600");
             btn.classList.add("text-red-500", "animate-pulse");
             btn.title = "Berhenti merekam";
         }
@@ -1704,7 +1752,7 @@ window.toggleVoiceInput = function (targetInputId, btnId) {
         if (btn) {
             btn.innerHTML = '<i class="fas fa-microphone-lines text-xl"></i>';
             btn.classList.remove("text-red-500", "animate-pulse");
-            btn.classList.add("text-slate-400", "hover:text-cyan-600");
+            btn.classList.add("text-slate-400", "hover:text-emerald-600");
             btn.title = "Gunakan pengenalan suara";
         }
     };
@@ -1717,7 +1765,7 @@ window.toggleVoiceInput = function (targetInputId, btnId) {
         if (btn) {
             btn.innerHTML = '<i class="fas fa-microphone-lines"></i>';
             btn.classList.remove("text-red-500", "animate-pulse");
-            btn.classList.add("text-slate-400", "hover:text-purple-600");
+            btn.classList.add("text-slate-400", "hover:text-indigo-600");
             btn.title = "Gunakan pengenalan suara";
         }
 
@@ -1734,13 +1782,13 @@ window.toggleVoiceInput = function (targetInputId, btnId) {
                             <ol class="list-decimal ml-5 font-medium text-slate-700 space-y-1">
                                 <li>Klik ikon <strong>Gembok / Pengaturan</strong> di sebelah kiri bilah alamat.</li>
                                 <li>Temukan menu <strong>Mikrofon (Microphone)</strong>.</li>
-                                <li>Ubah menjadi <strong class="text-cyan-600">"Izinkan" (Allow)</strong>.</li>
+                                <li>Ubah menjadi <strong class="text-emerald-600">"Izinkan" (Allow)</strong>.</li>
                                 <li>Lakukan <strong>Muat Ulang (Refresh/F5)</strong>.</li>
                             </ol>
                         </div>
                     `,
                     confirmButtonText: "Saya Mengerti",
-                    confirmButtonColor: "#0891b2",
+                    confirmButtonColor: "#059669",
                 });
             } else {
                 alert(
@@ -1803,7 +1851,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Handle tombol back browser
     window.addEventListener("popstate", (e) => {
         if (!e.state || !e.state.chatId) {
             backToLanding();
@@ -1822,14 +1869,11 @@ window.startNewChat = () => {
     backToLanding();
 };
 
-// ─── Rename dari navbar: ambil ID dari currentChatId ───
 window.renameChatFromNavbar = () => {
-    // Tutup semua dropdown dulu
     const navbarDropdown = document.getElementById("navbar-chat-dropdown");
     if (navbarDropdown) navbarDropdown.classList.add("hidden");
 
     const chatId = currentChatId;
-
     if (
         !chatId ||
         chatId === "null" ||
@@ -1847,7 +1891,6 @@ window.renameChatFromNavbar = () => {
 };
 
 window.pinChatFromNavbar = () => {
-    // Tutup semua dropdown dulu
     const navbarDropdown = document.getElementById("navbar-chat-dropdown");
     if (navbarDropdown) navbarDropdown.classList.add("hidden");
     const optionsDropdown = document.getElementById("chat-options-dropdown");
@@ -1920,7 +1963,7 @@ window.handleSearchInput = (keyword) => {
                 );
                 titleEl.innerHTML = originalTitle.replace(
                     regex,
-                    `<span class="text-purple-600 font-extrabold">$1</span>`,
+                    `<span class="text-indigo-600 font-extrabold">$1</span>`,
                 );
             } else {
                 titleEl.textContent = originalTitle;
@@ -2002,7 +2045,6 @@ window.loadSpecificChat = async (chatId) => {
     const chatBox = document.getElementById("chat-messages");
     const chatView = document.getElementById("chat-view");
     const navbar = document.getElementById("main-navbar");
-    const sidebarOffset = sidebar ? sidebar.offsetWidth : 0;
     const theDrop = document.querySelector(".theDrop");
 
     if (!chatBox || !chatView) return;
@@ -2019,7 +2061,7 @@ window.loadSpecificChat = async (chatId) => {
             "beforeend",
             `<div id="global-screen-loader" class="fixed inset-0 z-[150] flex items-center justify-center bg-[#fafafa]/95 animate-fade-in md:left-16 md:z-40">
             <div class="flex flex-col items-center gap-3">
-                <i class="fas fa-spinner animate-spin text-2xl text-purple-600"></i>
+                <i class="fas fa-spinner animate-spin text-2xl text-indigo-600"></i>
                 <span class="text-xs font-bold text-slate-400 tracking-wide">Memuat riwayat percakapan...</span>
             </div>
         </div>`,
@@ -2040,10 +2082,8 @@ window.loadSpecificChat = async (chatId) => {
             },
         });
 
-        if (response.status === 401 || response.status === 403) {
+        if (response.status === 401 || response.status === 403)
             throw new Error("AUTH_REQUIRED");
-        }
-
         if (!response.ok)
             throw new Error("Gagal mengambil riwayat percakapan.");
 
@@ -2062,23 +2102,21 @@ window.loadSpecificChat = async (chatId) => {
                         "beforeend",
                         `
                         <div class="flex justify-end w-full animate-fade-in-up">
-                            <div class="bg-purple-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
+                            <div class="bg-indigo-600 text-white px-5 py-3 rounded-2xl max-w-[85%] shadow-sm text-sm">
                                 ${escapeHtml(msg.message)}
                             </div>
                         </div>
                         `,
                     );
                 } else {
+                    // Bubble AI dari history juga pakai createAIBubble agar bisa disalin
+                    const bubbleId = "hist-" + msg.id;
                     chatBox.insertAdjacentHTML(
                         "beforeend",
-                        `
-                        <div class="flex justify-start w-full animate-fade-in-up">
-                            <div class="bg-slate-100 border border-slate-200 text-slate-800 p-4 rounded-2xl max-w-[85%] shadow-sm text-sm">
-                                ${msg.message}
-                            </div>
-                        </div>
-                        `,
+                        createAIBubble(bubbleId),
                     );
+                    const el = document.getElementById(bubbleId);
+                    if (el) el.innerHTML = parseMarkdown(msg.message);
                 }
             });
 
@@ -2095,13 +2133,14 @@ window.loadSpecificChat = async (chatId) => {
 
         document.querySelectorAll(".sidebar-chat-btn").forEach((btn) => {
             btn.classList.remove(
-                "bg-cyan-100",
-                "text-cyan-800",
+                "bg-emerald-100",
+                "text-emerald-800",
                 "font-semibold",
             );
             btn.classList.add("text-slate-700", "hover:bg-slate-200/50");
             const svg = btn.querySelector("svg");
-            if (svg) svg.classList.replace("text-cyan-600", "text-slate-400");
+            if (svg)
+                svg.classList.replace("text-emerald-600", "text-slate-400");
         });
 
         const activeBtn = document.getElementById(`sidebar-chat-${chatId}`);
@@ -2111,13 +2150,16 @@ window.loadSpecificChat = async (chatId) => {
                 "hover:bg-slate-200/50",
             );
             activeBtn.classList.add(
-                "bg-cyan-100",
-                "text-cyan-800",
+                "bg-emerald-100",
+                "text-emerald-800",
                 "font-semibold",
             );
             const activeSvg = activeBtn.querySelector("svg");
             if (activeSvg)
-                activeSvg.classList.replace("text-slate-400", "text-cyan-600");
+                activeSvg.classList.replace(
+                    "text-slate-400",
+                    "text-emerald-500",
+                );
         }
     } catch (error) {
         console.error("Fetch Kesalahan:", error);
@@ -2141,15 +2183,15 @@ window.loadSpecificChat = async (chatId) => {
                             Sesi riwayat hanya dapat diakses oleh pengguna yang telah terautentikasi. Silakan masuk terlebih dahulu.
                         </div>
                         <div class="pt-1">
-                            <button onclick="window.openGoogleLoginModal()" 
-                                class="group/btn inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-md hover:shadow-purple-500/20 cursor-pointer focus:outline-none">
+                            <button onclick="window.openGoogleLoginModal()"
+                                class="group/btn inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-emerald-500 hover:from-indigo-700 hover:to-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition-all duration-300 shadow-md hover:shadow-emerald-500/20 cursor-pointer focus:outline-none">
                                 <i class="fab fa-google text-sm transition-transform group-hover/btn:scale-110 shrink-0"></i>
                                 <span>Autentikasi via Google</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                `,
+            `,
             );
         } else {
             chatBox.innerHTML = `
@@ -2189,4 +2231,52 @@ window.toggleAccountModal = (e) => {
     }
     const modal = document.getElementById("account-popup-modal");
     if (modal) modal.classList.toggle("hidden");
+};
+
+// ==========================================
+// 📥 FUNGSI EXPORT FILE (PDF / WORD)
+// ==========================================
+window.downloadFile = function(title, encodedContent, format) {
+    const content = decodeURIComponent(encodedContent);
+    
+    // Bikin form tersembunyi
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/app/export-document'; // Sesuaikan dengan route Laravel kamu
+    form.target = '_blank'; // Buka di tab baru biar chat gak kerestart
+
+    // Input Token CSRF
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = '_token';
+    csrfInput.value = document.querySelector('meta[name="csrf-token"]').content;
+    form.appendChild(csrfInput);
+
+    // Input Judul
+    const titleInput = document.createElement('input');
+    titleInput.type = 'hidden';
+    titleInput.name = 'title';
+    titleInput.value = title;
+    form.appendChild(titleInput);
+
+    // Input Format (pdf/word)
+    const formatInput = document.createElement('input');
+    formatInput.type = 'hidden';
+    formatInput.name = 'format';
+    formatInput.value = format;
+    form.appendChild(formatInput);
+
+    // Input Konten Markdown/Text
+    const contentInput = document.createElement('input');
+    contentInput.type = 'hidden';
+    contentInput.name = 'content';
+    contentInput.value = content;
+    form.appendChild(contentInput);
+
+    // Tempel, Submit, Hapus
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+    
+    showToast(`⏳ Sedang menyiapkan dokumen ${format.toUpperCase()}...`);
 };

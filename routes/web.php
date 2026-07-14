@@ -3,32 +3,44 @@
 use App\Http\Controllers\AssistantController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\LearningController;
 use Illuminate\Support\Facades\Route;
 
 // landing page
 Route::get('/', [AssistantController::class, 'index'])->name('assistant.index');
 
 // autentikasi google
-Route::post('/auth/google/gis', [AuthController::class, 'handleGisCallback']);
-Route::get('/auth/google', [AuthController::class, 'redirectToGoogle']);
+Route::post('/auth/google/gis', [AuthController::class, 'handleGisCallback']); // Routes Baru untuk Google Socialite Standard (Bukan POST lagi, gunakan GET)
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
-
 // Guest user (user yg bukan login email)
 Route::get('/chat', [ChatController::class, 'chatGateway'])->name('chat.gateway');
 Route::post('/api/chat/prompt', [ChatController::class, 'handlePrompt'])
     ->middleware('check.prompt')
     ->name('chat.prompt');
 
-// user login email
-Route::middleware(['auth'])->prefix('app')->name('app.')->group(function () {
-    Route::get('/', [ChatController::class, 'index'])->name('assistant.chat');
-    Route::post('/process', [ChatController::class, 'chatProcess'])->name('assistant.process');
-    Route::get('/{id}', [ChatController::class, 'showChat'])->name('app.chat.show');
-    // Pastikan route ini ada di dalam middleware auth (kalau butuh login)
-    Route::patch('/chat/{id}', [ChatController::class, 'renameChat'])->name('chat.rename');
-    Route::delete('/chat/{id}', [ChatController::class, 'destroy']);
-    Route::patch('/chat/{id}/pin', [ChatController::class, 'pinChat']);
+    // KHUSUS UNTUK USER LOGIN
+Route::middleware('auth')->group(function () {
+    // Auth routes
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/belajar', [LearningController::class, 'index'])->name('edupath.learning');
+    Route::get('/belajar/{slug}', [LearningController::class, 'show'])->name('belajar.show');
+    Route::get('/belajar/{module_slug}/{material_slug}', [LearningController::class, 'readMaterial'])->name('belajar.read');
+    Route::get('/riwayat-dokumen', [DocumentController::class, 'riwayatDokumen'])->name('riwayat.dokumen');
+
+    // App routes
+    Route::prefix('app')->name('app.')->group(function () {
+        Route::get('/', [ChatController::class, 'index'])->name('assistant.chat');
+        Route::post('/process', [ChatController::class, 'chatProcess'])->name('assistant.process');
+        Route::get('/{id}', [ChatController::class, 'showChat'])->name('app.chat.show');
+        Route::patch('/chat/{id}', [ChatController::class, 'renameChat'])->name('chat.rename');
+        Route::delete('/chat/{id}', [ChatController::class, 'destroy']);
+        Route::patch('/chat/{id}/pin', [ChatController::class, 'pinChat']);
+        Route::post('/export-document', [ChatController::class, 'exportDocument'])->name('app.export');
+    });
 });
 
 //route khusus developer

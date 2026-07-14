@@ -22,6 +22,8 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.2.0",
         "composer": "^4.1.0",
+        "reveal.js": "^6.0.1",
+        "scrollreveal": "^4.0.9",
         "sweetalert2": "^11.26.25"
     }
 }
