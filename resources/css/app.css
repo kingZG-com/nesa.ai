@@ -1,0 +1,453 @@
+@import 'tailwindcss';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'reveal.js/dist/reveal.css';
+@import 'reveal.js/dist/theme/white.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* ═══════════════════════════════════════════════════
+   GLOBAL STYLES & TYPOGRAPHY
+═══════════════════════════════════════════════════ */
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+code {
+    font-family: monospace;
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+/* ═══════════════════════════════════════════════════
+   GLOBAL SCROLLBAR (Prioritas dari app.css)
+═══════════════════════════════════════════════════ */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Utility tambahan dari home.css (hanya berlaku jika class ini dipanggil) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   UTILITIES & BUTTONS
+═══════════════════════════════════════════════════ */
+.text-gradient {
+    background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-premium {
+    background: linear-gradient(135deg, #4F46E5 0%, #10B981 100%);
+}
+
+.shadow-luxury {
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+}
+
+.hero-btn-guru {
+    background: #10B981;
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+}
+
+.hero-btn-siswa {
+    background: #4F46E5;
+    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+}
+
+/* ═══════════════════════════════════════════════════
+   SIDEBAR & ANIMATIONS (Dari home.css)
+═══════════════════════════════════════════════════ */
+/* Sidebar Transition Logic */
+#sidebar {
+    width: 68px; /* Collapsed width */
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#sidebar.expanded {
+    width: 280px; /* Expanded width */
+}
+
+/* Sidebar Text Transition */
+.sidebar-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, width 0.3s ease;
+    display: none;
+}
+
+#sidebar.expanded .sidebar-text {
+    display: block;
+    opacity: 1;
+    width: auto;
+}
+
+/* Activity Section Visibility */
+.activity-section {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+}
+
+#sidebar.expanded .activity-section {
+    opacity: 1;
+    pointer-events: auto;
+    height: auto;
+    margin-top: 1rem;
+}
+
+/* Custom Tooltip Logic */
+.custom-tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s;
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* Only show tooltip when sidebar is NOT expanded AND hovered */
+#sidebar:not(.expanded) .group\/item:hover .custom-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Keyframes & Animations */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.4s ease-out forwards;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.typing-dot {
+    animation: pulse-glow 1.4s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+/* ═══════════════════════════════════════════════════
+   NESA VENDOR CARDS — Modern Clean UI
+═══════════════════════════════════════════════════ */
+
+/* ── Container utama ── */
+.nesa-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.nesa-intro,
+.nesa-closing {
+    font-size: 12.5px;
+    color: #64748b;
+    margin: 0;
+    padding: 0 2px;
+}
+
+.nesa-closing {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* ── Grid kartu ── */
+.nesa-card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ── Base card ── */
+.nesa-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.04);
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.nesa-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+/* ── Accent bar atas ── */
+.mua-card    { border-top: 3px solid #a78bfa; }
+.laundry-card { border-top: 3px solid #22d3ee; }
+
+/* ── Header ── */
+.nesa-card-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px 14px 11px;
+}
+
+.mua-card .nesa-card-header    { background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 100%); }
+.laundry-card .nesa-card-header { background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); }
+
+/* ── Avatar ── */
+.nesa-card-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.nesa-card-avatar svg {
+    width: 22px;
+    height: 22px;
+}
+
+.mua-avatar {
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    color: white;
+}
+
+.laundry-avatar {
+    background: linear-gradient(135deg, #0891b2, #22d3ee);
+    color: white;
+}
+
+/* ── Info teks ── */
+.nesa-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.nesa-card-name {
+    font-weight: 700;
+    font-size: 13.5px;
+    color: #0f172a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nesa-card-sub {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* ── Badge ── */
+.nesa-card-badge {
+    padding: 4px 10px;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.mua-badge     { background: #ede9fe; color: #6d28d9; }
+.laundry-badge { background: #cffafe; color: #0e7490; }
+
+/* ── Body ── */
+.nesa-card-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ── Price grid ── */
+.nesa-price-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.nesa-price-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 10px;
+    padding: 7px 10px;
+}
+
+.nesa-price-item.highlight-express {
+    background: #fefce8;
+    border-color: #fde047;
+}
+
+.nesa-price-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.nesa-price-label {
+    font-size: 10.5px;
+    color: #64748b;
+    flex: 1;
+    min-width: 0;
+}
+
+.nesa-price-val {
+    font-weight: 700;
+    font-size: 11.5px;
+    color: #1e293b;
+    white-space: nowrap;
+}
+
+/* ── Tag row ── */
+.nesa-tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.nesa-tag {
+    padding: 3px 9px;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.tag-green  { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+.tag-blue   { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.tag-purple { background: #faf5ff; color: #7c3aed; border-color: #ddd6fe; }
+.tag-yellow { background: #fefce8; color: #854d0e; border-color: #fde047; }
+.tag-pink   { background: #fdf2f8; color: #9d174d; border-color: #fbcfe8; }
+
+/* ── Footer ── */
+.nesa-card-footer {
+    padding: 10px 14px 14px;
+    background: #fafafa;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nesa-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.nesa-meta-item {
+    font-size: 10.5px;
+    color: #94a3b8;
+}
+
+.nesa-meta-item.warn {
+    color: #d97706;
+    font-weight: 600;
+}
+
+/* ── WhatsApp button ── */
+.nesa-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    padding: 9px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: filter 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(37,211,102,0.3);
+    cursor: pointer;
+}
+
+.nesa-wa-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37,211,102,0.45);
+}
+
+.nesa-wa-btn:active {
+    transform: translateY(0);
+    filter: brightness(0.97);
+}
+
+.nesa-wa-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+/* ── Responsive: mobile 1 kolom price ── */
+@media (max-width: 400px) {
+    .nesa-price-grid {
+        grid-template-columns: 1fr;
+    }
+}
