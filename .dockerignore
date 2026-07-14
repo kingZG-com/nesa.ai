@@ -14,7 +14,7 @@ vendor/
 *.log
 
 # ─── Laravel Environment (NEVER bake secrets into image) ──────
-.env
+
 .env.local
 .env.development
 .env.staging

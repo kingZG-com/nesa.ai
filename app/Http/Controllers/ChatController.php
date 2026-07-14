@@ -503,7 +503,7 @@ PROMPT;
 
         while ($attempt < $maxRetries) {
             try {
-                $client = \Gemini::client(env('GEMINI_API_KEY'));
+                $client = \Gemini::client(config('gemini.api_key'));
 
                 $response = $client->generativeModel('gemini-3.1-flash-lite')
                     ->generateContent(
@@ -561,7 +561,7 @@ PROMPT;
         }
 
         try {
-            $client = \Gemini::client(env('GEMINI_API_KEY'));
+            $client = \Gemini::client(config('gemini.api_key'));
 
             $systemInstructions = "Persona: Sistan, asisten AI cerdas untuk mendampingi Bapak/Ibu Guru mengurus RPP, nilai, inovasi mengajar, dan literasi digital.";
 

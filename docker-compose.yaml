@@ -1,29 +1,32 @@
 # ═══════════════════════════════════════════════════════════════════
-#  docker-compose.yaml
-#  Stack : OpenLiteSpeed + lsphp83 + FrankenPHP + Laravel
+#  docker-compose.yaml (Auto-Build Version)
+#  Stack : OpenLiteSpeed + lsphp84 + FrankenPHP + Laravel
 #  DB    : PostgreSQL 16 (Alpine)
 #  WS    : Laravel Reverb (port 8080)
-#  Usage : docker compose up -d
 # ═══════════════════════════════════════════════════════════════════
 
 name: laravel-ols
 
 services:
 
-  # ── Laravel Application (OLS + lsphp83 + FrankenPHP) ──────────
+  # ── Laravel Application (OLS + lsphp84 + FrankenPHP) ──────────
   app:
     build:
       context: .
       dockerfile: Dockerfile
       args:
-        OLS_VERSION: "1.8.5"
-        NODE_VERSION: "20"
-    image: laravel-ols:latest
-    container_name: laravel_ols_app
+        NODE_VERSION: "24"
+    # 🔥 TRICK 1: Ubah tag image jadi unik (misal v1) tiap ada perombakan besar, 
+    # atau apus baris 'image' ini biar dia ga nge-cache nama image yang sama terus.
+    image: laravel-nginx:v1
+    container_name: laravel_nginx_image
     restart: unless-stopped
 
+    # 🔥 TRICK 2: Selalu rebuild image dari Dockerfile lokal (no cache pull)
+    pull_policy: never
+
     ports:
-      - "8088:8088"         # OLS HTTP
+      - "8088:8088"         # Nginx HTTP
       - "8080:8080"         # Laravel Reverb WebSocket
 
     environment:
@@ -57,16 +60,12 @@ services:
       REVERB_SCHEME: http
 
       # ── OLS Behavior ────────────────────────────────────────────
-      # Set to "true" to auto-run php artisan migrate on startup
       RUN_MIGRATIONS: "${RUN_MIGRATIONS:-false}"
 
     volumes:
-      # Persist user-uploaded files
       - app_storage:/var/www/html/storage/app/public
-      # Persist Laravel logs
       - app_logs:/var/www/html/storage/logs
-      # Persist OLS access/error logs
-      - ols_logs:/usr/local/lsws/logs
+      - nginx_logs:/var/log/nginx
 
     depends_on:
       db:
@@ -82,7 +81,6 @@ services:
       retries: 5
       start_period: 60s
 
-    # Resource limits (adjust to your Cloud Run / server specs)
     deploy:
       resources:
         limits:
@@ -104,15 +102,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
     ports:
-      - "5432:5432"         # Expose for local tools (DBeaver, TablePlus, etc.)
+      - "5432:5432"
 
     networks:
       - app_network
 
     healthcheck:
-      test:
-        - "CMD-SHELL"
-        - "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-smartnes_db}"
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_DATABASE:-smartnes_db}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -126,7 +122,7 @@ volumes:
     driver: local
   app_logs:
     driver: local
-  ols_logs:
+  nginx_logs:
     driver: local
 
 # ── Networks ───────────────────────────────────────────────────

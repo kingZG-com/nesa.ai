@@ -1,20 +1,18 @@
 # ═══════════════════════════════════════════════════════════════════
-#  Docker Image: OpenLiteSpeed + lsphp83 + FrankenPHP + Laravel
-#  Port  : 8088 (OLS default)
-#  PHP   : 8.3 via lsphp83 (LiteSpeed LSAPI) + FrankenPHP binary
-#  Base  : ubuntu:24.04 (Noble) — LiteSpeed APT repo supported
+#  Docker Image: Nginx + PHP 8.3 FPM + Laravel
+#  Port  : 8088
+#  Base  : ubuntu:22.04 (Jammy)
 # ═══════════════════════════════════════════════════════════════════
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
 # ── Build Args ──────────────────────────────────────────────────
-# NODE_VERSION must match docker-compose.yaml args.NODE_VERSION
-ARG NODE_VERSION=20
+ARG NODE_VERSION=24
 ARG DEBIAN_FRONTEND=noninteractive
 
 # ── Environment ─────────────────────────────────────────────────
 ENV TZ=Asia/Jakarta \
-    LANG=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
 
 # ── 1. Base System Dependencies ─────────────────────────────────
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -28,114 +26,82 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         unzip \
         tzdata \
         procps \
+        supervisor \
+        sqlite3 \
+        postgresql \
+        postgresql-contrib \
+        dos2unix \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone \
+    && echo $TZ > /etc/timezone
+
+# ── 2. Add PHP Ondrej PPA & Install PHP + Nginx ─────────────────
+RUN add-apt-repository ppa:ondrej/php -y \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        nginx \
+        php8.4-fpm \
+        php8.4-cli \
+        php8.4-common \
+        php8.4-curl \
+        php8.4-pgsql \
+        php8.4-sqlite3 \
+        php8.4-opcache \
+        php8.4-intl \
+        php8.4-redis \
+        php8.4-xml \
+        php8.4-mbstring \
+        php8.4-zip \
     && rm -rf /var/lib/apt/lists/*
 
-# ── 2. Add LiteSpeed Technology Official APT Repository ─────────
-# Source: https://rpms.litespeedtech.com/debian/
-RUN wget -qO /tmp/lst_repo.sh \
-        https://rpms.litespeedtech.com/debian/enable_lst_debian_repo.sh \
-    && bash /tmp/lst_repo.sh \
-    && rm /tmp/lst_repo.sh \
-    && apt-get update
+# Symlink php8.4 to php
+RUN update-alternatives --set php /usr/bin/php8.4
 
-# ── 3. Install OpenLiteSpeed 1.8.5 ──────────────────────────────
-# Pin exact version. Check available: apt-cache madison openlitespeed
-RUN apt-get install -y --no-install-recommends openlitespeed \
-    && rm -rf /var/lib/apt/lists/*
-
-# ── 4. Install lsphp83 + PHP Extensions ─────────────────────────
-# lsphp83 = PHP 8.3 compiled with LiteSpeed LSAPI (native OLS handler)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        lsphp83 \
-        lsphp83-common \
-        lsphp83-curl \
-        lsphp83-pgsql \
-        lsphp83-opcache \
-        lsphp83-intl \
-        lsphp83-imap \
-    && rm -rf /var/lib/apt/lists/*
-
-# Symlink lsphp83 binary → /usr/local/bin/php (for Composer & artisan CLI)
-RUN ln -sf /usr/local/lsws/lsphp83/bin/lsphp /usr/local/bin/php
-
-# ── 5. Install FrankenPHP Binary ────────────────────────────────
-# FrankenPHP embeds PHP 8.3 + Caddy into a single binary.
-# In this stack it is installed alongside OLS as an available PHP runtime.
-# OLS uses lsphp83 via LSAPI; FrankenPHP is available for:
-#   - Laravel Octane worker mode
-#   - Alternative LSAPI handler (see commented block in httpd_config.conf)
-RUN ARCH=$(dpkg --print-architecture) \
-    && case "$ARCH" in \
-        amd64)  FRANKEN_ARCH="x86_64"  ;; \
-        arm64)  FRANKEN_ARCH="aarch64" ;; \
-        *)      echo "Unsupported arch: $ARCH" && exit 1 ;; \
-    esac \
-    && FRANKEN_TAG=$(curl -fsSL \
-        "https://api.github.com/repos/dunglas/frankenphp/releases/latest" \
-        | grep '"tag_name"' | head -1 | cut -d'"' -f4) \
-    && echo "Installing FrankenPHP ${FRANKEN_TAG} for ${FRANKEN_ARCH}..." \
-    && curl -fsSL \
-        "https://github.com/dunglas/frankenphp/releases/download/${FRANKEN_TAG}/frankenphp-linux-${FRANKEN_ARCH}" \
-        -o /usr/local/bin/frankenphp \
-    && chmod +x /usr/local/bin/frankenphp \
-    && frankenphp version
-
-# ── 6. Install Node.js (for Vite / frontend build) ─────────────
-RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x| bash - \
+# ── 3. Install Node.js (for Vite / frontend build) ─────────────
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/* \
     && node --version && npm --version
 
-# ── 7. Install Composer ─────────────────────────────────────────
+# ── 4. Install Composer ─────────────────────────────────────────
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# ── 8. Configure OpenLiteSpeed ──────────────────────────────────
-# Copy our custom OLS configuration files
-COPY ols/httpd_config.conf /usr/local/lsws/conf/httpd_config.conf
-RUN mkdir -p /usr/local/lsws/conf/vhosts/html
-COPY ols/vhconf.conf       /usr/local/lsws/conf/vhosts/html/vhconf.conf
+# ── 5. Configure Nginx and PHP-FPM ──────────────────────────────
+# Disable default nginx site
+RUN rm /etc/nginx/sites-enabled/default
+# Copy our custom Nginx server block
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+# Configure supervisord
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Create directories required by OLS at runtime
-RUN mkdir -p \
-        /tmp/lshttpd/swapping \
-        /usr/local/lsws/logs \
-        /var/log/supervisor \
-    && chown -R nobody:nogroup \
-        /tmp/lshttpd \
-        /usr/local/lsws/logs
+# Create PHP-FPM run directory
+RUN mkdir -p /run/php
 
-# ── 9. Copy Entrypoint ──────────────────────────────────────────
-COPY ols/docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+# ── 6. Copy & Fix Entrypoint ────────────────────────────────────
+COPY docker/entrypoint.sh /docker-entrypoint.sh
+RUN dos2unix /docker-entrypoint.sh \
+    && chmod +x /docker-entrypoint.sh
 
-# ── 10. Copy Laravel Application ────────────────────────────────
+# ── 7. Copy Laravel Application ─────────────────────────────────
 WORKDIR /var/www/html
 
 COPY . .
 
-# ── 11. Install PHP Dependencies (Composer) ─────────────────────
-# --no-dev   → skip PHPUnit, Faker, etc. for production
-# --optimize → generate optimized class autoloader
+# ── 8. Install PHP Dependencies (Composer) ──────────────────────
 RUN composer install \
         --no-interaction \
         --optimize-autoloader \
         --no-dev \
         --prefer-dist
 
-# ── 12. Build Frontend Assets (Vite + Tailwind) ─────────────────
-RUN npm install --legacy-peer-deps && npm run build
+# ── 9. Build Frontend Assets (Vite + Tailwind) ──────────────────
+RUN npm install --legacy-peer-deps
+RUN NODE_OPTIONS="--max-old-space-size=1536" npm run build
 
-# ── 13. Set Permissions ─────────────────────────────────────────
-# OLS runs as 'nobody:nogroup' — storage & cache must be writable
-RUN chown -R nobody:nogroup /var/www/html \
-    && chmod -R 775 \
-        /var/www/html/storage \
-        /var/www/html/bootstrap/cache
+# ── 10. Set Permissions ─────────────────────────────────────────
+RUN chown -R www-data:www-data /var/www/html
 
 # ── Port & Entrypoint ───────────────────────────────────────────
-# 8088 = OpenLiteSpeed default HTTP port
 EXPOSE 8088
+EXPOSE 8080
 
 CMD ["/docker-entrypoint.sh"]
